@@ -1,0 +1,39 @@
+disease_target,target_pathogen
+Chikungunya,Chikungunya virus
+Cholera,Vibrio cholerae
+Common cold,Human Coronavirus
+Covid-19,SARS-CoV-2
+Crimean Congo Hemorrhagic Fever,Crimean Congo Hemorrhagic Fever virus
+Cutaneous Leishmaniasis,Leishmania spp
+Dengue fever,Dengue virus
+Ebola fever,Ebola virus
+Influenza,Influenza A
+Influenza,Influenza B
+Lassa fever,Lassa virus
+Malaria,Plasmodium Species
+Malaria,Plasmodium Falciparum
+Malaria,Plasmodium Malariae
+Malaria,Plasmodium Ovale
+Malaria,Plasmodium Vivax
+Marburg,Marburg virus
+Measles,Measles morbillivirus
+Meningitis,Neisseria meningitidis
+Middle East Respiratory Syndrome,Middle East Respiratory Coronavirus
+Mpox,Mpox virus
+Mucocutaneous Leishmaniasis,Leishmania spp
+Parainfluenza,Parainfluenza virus
+Parapertussis,Bordetella parapertussis
+Paratyphoid fever,Salmonella Paratyphi
+Pertussis,Bordetella pertussis
+Pox diseases (unspecified),Orthopoxvirus
+Pox diseases (unspecified),Pox viruses (unspecified)
+Rift Valley Fever,Rift Valley Fever virus
+Rubella,Rubella virus
+Salmonellosis (Non-Typhoidal),Salmonella enterica
+Salmonellosis (Non-Typhoidal),Salmonella spp.
+Tuberculosis,Mycobacterium Tuberculosis
+Typhoid fever,Salmonella Typhi
+Visceral Leishmaniasis,Leishmania spp
+West Nile fever,West Nile virus
+Yellow Fever,Yellow Fever virus
+Zika fever,Zika virus

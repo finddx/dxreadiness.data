@@ -1,0 +1,488 @@
+---
+title: "Outbreaks Dx readiness index progress report"
+author: "Anna Mantsoki"
+date: "23/04/2024"
+output: finddxtemplate::html_document_find
+resource_files:
+- img/framework.png
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
+
+library(COINr)
+library(dplyr)
+library(readr)
+library(readxl)
+library(tidyr)
+library(stringr)
+library(tibble)
+library(reactable)
+library(reactablefmtr)
+library(magrittr)
+library(ggplot2)
+library(downloadthis)
+library(htmltools)
+library(purrr)
+library(shinyfind)
+library(finddxtemplate)
+
+htmltools::img(src = system.file('logo', 'logo.svg', package = 'finddxtemplate'), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; padding:10px;')
+
+
+```
+
+```{r data}
+comp_data_method <- read_excel("data/dx_readiness_comp_data_20240422.xlsx", sheet = "Method")
+comp_data_idata <- read_excel("data/dx_readiness_comp_data_20240422.xlsx", sheet = "iData")
+
+
+
+disease_list <- data.frame(disease_target = str_to_title(c(
+  "Chikungunya",
+  "Cholera",
+  "Covid-19",
+  "Crimean Congo Hemorrhagic Fever",
+  "Dengue Fever",
+  "Ebola Fever",
+  "Influenza",
+  "Lassa Fever",
+  "Marburg",
+  "Measles",
+  "Meningitis",
+  "Middle East Respiratory Syndrome",
+  "Mpox",
+  "Paratyphoid Fever",
+  "Rubella",
+  "Salmonellosis (Non-Typhoidal)",
+  "Typhoid Fever",
+  "Yellow Fever",
+  "Zika Fever"
+)),
+transmission_mode = c(
+  "Vector-borne",
+  "Waterborne",
+  "Respiratory",
+  "Contact; Zoonotic",
+  "Vector-borne",
+  "Contact; Zoonotic",
+  "Respiratory",
+  "Contact; Zoonotic",
+  "Contact; Zoonotic",
+  "Respiratory",
+  "Airborne droplets, Contact",
+  "Contact; Zoonotic",
+  "Contact; Zoonotic",
+  "Food/waterborne",
+  "Respiratory",
+  "Food/waterborne",
+  "Food/waterborne",
+  "Vector-borne",
+  "Vector-borne; Vertical"
+),
+last_update = c(
+  "2018", "2023", "2021", "2021", "2021", "2022","Unknown",
+  "2023","2023", "2023", "2023", "Unknown", "2022",
+  "2023", "2023", "2023", "2023", "2023", "2019"
+))
+
+disease_pathogen_list <- left_join(comp_data_idata, disease_list) |>
+  select(pathogen = uName, disease_target, last_update)
+
+path <- "results/composer_results-2024-04-22.xlsx"
+comp_data_results <- path |>
+  excel_sheets() |>
+  set_names() |>
+  map(read_excel, path = path)
+
+```
+
+## Why we build the Diagnostic readiness index (DxRI) for pathogens of Outbreak potential?
+
+The **Pandemics Threat (PT) team** at FIND initiated the project being inspired by other available indexes such as:
+
+-   [**The Global Health Security index (GHS)**](https://ghsindex.org/)
+-   [**100 Days Mission Scorecard**](https://d7npznmd5zvwd.cloudfront.net/prod/uploads/2024/01/100-Days-Mission-Scorecard-Report.pdf)
+
+The **goal of the Dx readiness index for pathogens of Outbreak potential** is to highlight:
+
+1.  *The availability of diagnostic tools in global scale*
+2.  *Raise awareness for current gaps in the diagnostic technology landscape across diseases*
+3.  *Guide investements for future development of diagnostic tools*
+
+### Methodology
+
+#### Data sources and processing
+
+The raw data used to build the index come from the [**Test Directory database**](https://find.lightning.force.com/lightning/r/Report/00OVj0000003Xc9MAE/view?queryScope=userFolders), captured by the **Business Intelligence (BI) team** at FIND.
+
+We have included data from technology landscapes for **21 pathogens of Outbreak potential, corresponding to 19 diseases** as shown below.
+
+```{r disease-pathogen-list}
+disease_pathogen_list |>
+  arrange(last_update) |>
+  reactable::reactable(
+    pagination = FALSE,
+    compact = TRUE,
+    borderless = FALSE,
+    striped = FALSE,
+    fullWidth = FALSE,
+    resizable = TRUE, 
+    bordered = TRUE,
+    highlight = TRUE,
+    searchable = TRUE,
+    defaultColDef = colDef(
+      align = "center",
+      minWidth = 150
+    ),
+    # Add theme for the top border
+    theme = reactableTheme(
+      headerStyle = list(
+        "&:hover[aria-sort]" = list(background = "hsl(0, 0%, 96%)"),
+        "&[aria-sort='ascending'], &[aria-sort='descending']" = list(background = "hsl(0, 0%, 96%)"),
+        borderColor = "#555"
+      )
+    ))
+```
+
+Below you see a summary table for the indicators we have included and how we generated the score for each of them.
+
+```{r method-table}
+
+comp_data_method |>
+  reactable::reactable(
+    pagination = FALSE,
+    compact = TRUE,
+    borderless = FALSE,
+    striped = FALSE,
+    fullWidth = FALSE,
+    resizable = TRUE, 
+    bordered = TRUE,
+    highlight = TRUE,
+    searchable = TRUE,
+    defaultColDef = colDef(
+      align = "center",
+      minWidth = 150
+    ),
+    # Add theme for the top border
+    theme = reactableTheme(
+      headerStyle = list(
+        "&:hover[aria-sort]" = list(background = "hsl(0, 0%, 96%)"),
+        "&[aria-sort='ascending'], &[aria-sort='descending']" = list(background = "hsl(0, 0%, 96%)"),
+        borderColor = "#555"
+      )
+    ))
+
+```
+
+#### Composite index framework
+
+Composite indexes are generated by combining multiple individual indicators into a single measure. A composite indicator may include several dimensions, where the dimensions represent different domains or aspects of the phenomenon being measured. Examples of common composite indices are index of well-being, sustainable development, economic growth etc. We build the Dx readiness index (DxRI) using a composite indicator framework, in an effort to summarize and present the key variables that form a diagnostic technology landscape.
+
+![](img/framework.png)
+
+#### Building a composite indicator live
+
+We will use the [composer](https://shinyproxy.finddx.org/app/composer?sp_hide_navbar=true) application we have developed at FIND.
+
+## Results
+
+```{r table}
+### Horizontal bar chart to display the raw values for all indicators
+bar_chart <-
+  function(label,
+           width = "100%",
+           height = "13px",
+           fill = "#00bfc4",
+           background = NULL) {
+    bar <-
+      div(style = list(
+        background = fill,
+        width = width,
+        height = height
+      ))
+    chart <-
+      div(style = list(
+        flexGrow = 1,
+        marginLeft = "8px",
+        background = background
+      ),
+      bar)
+    div(style = list(display = "flex", alignItems = "center"), label, chart)
+  }
+
+
+
+norm_rating_column <- function(maxWidth = 90, ...) {
+  colDef(
+    maxWidth = maxWidth,
+    align = "right",
+    class = "cell number",
+    resizable = TRUE,
+    headerStyle = list(fontWeight = "500"),
+    ...
+  )
+}
+
+
+
+table_data <- comp_data_results$Results.FullScore |>
+  left_join(comp_data_results$Data.Normalised, by = "uCode", suffix = c("","_normalised")) |>
+  left_join(comp_data_results$Meta.Unit |>
+              select(uCode, disease_target, transmission_mode), by = "uCode") |>
+  select(Pathogen = uName, Disease = disease_target, transmission_mode,
+         Rank, dx_readiness_index,
+         reg_approval_normalised,
+         reg_status_normalised,
+         planned_market_entry_normalised,
+         ref_lab_normalised,
+         hosp_lab_normalised,
+         phc_normalised,
+         tpp_available_normalised,
+         reg_approval, reg_status,
+         planned_market_entry, ref_lab,
+         hosp_lab, phc,
+         tpp_available
+         )
+
+#Create the reactable
+table <- reactable(
+      table_data,
+      pagination = FALSE,
+      showSortIcon = FALSE,
+      highlight = TRUE,
+      compact = TRUE,
+      resizable = TRUE,
+      defaultSorted = "Rank",
+      defaultSortOrder = "asc",
+      defaultColDef = colDef(headerClass = "header colheader"),
+      columnGroups = list(
+        colGroup(
+          name = "Normalized values",
+          columns = c("reg_approval_normalised",
+                      "reg_status_normalised","planned_market_entry_normalised", 
+                      "ref_lab_normalised", "hosp_lab_normalised", "phc_normalised", 
+                      "tpp_available_normalised"),
+          headerClass = "groupheader"
+        ),
+        colGroup(
+          name = "Raw values",
+          columns = c("reg_approval", "reg_status", "planned_market_entry", 
+                      "ref_lab", "hosp_lab", "phc", "tpp_available"),
+          headerClass = "groupheader"
+        )
+        ),
+      columns = list(
+        Pathogen = colDef(
+          maxWidth = 160,
+          show = TRUE
+          ),
+        Disease = colDef(
+          maxWidth = 150,
+          show = TRUE
+          ),
+        transmission_mode  = colDef(
+          name = "Transmission mode",
+          maxWidth = 150,
+          show = TRUE
+          ),
+          reg_approval = colDef(
+          name = "Reg. achieved",
+          align = "left",
+          ### Add column border to left side of column
+          class = "border-left cell number",
+          # headerStyle = list(fontWeight = "500"),
+          cell = function(value) {
+            ### Calculate width of bar color to display
+            width <- paste0(value / max(table_data$reg_approval) * 100, "%")
+            bar_chart(value,
+                      width = width,
+                      fill = "#5A9A70",
+                      background = "#e1e1e1")
+          }
+        ),
+          reg_status = colDef(
+            name = "Reg. authorities",
+            align = "left",
+            ### Add column border to left side of column
+            class = "border-left cell number",
+            # headerStyle = list(fontWeight = "500"),
+            cell = function(value) {
+              ### Calculate width of bar color to display
+              width <- paste0(value / max(table_data$reg_status) * 100, "%")
+              bar_chart(value,
+                        width = width,
+                        fill = "#5A9A70",
+                        background = "#e1e1e1")
+            }
+          ),
+        planned_market_entry = colDef(
+            name = "Planned market entry",
+            align = "left",
+            ### Add column border to left side of column
+            class = "border-left cell number",
+            # headerStyle = list(fontWeight = "500"),
+            cell = function(value) {
+              ### Calculate width of bar color to display
+              width <- paste0(value / max(table_data$planned_market_entry) * 100, "%")
+              bar_chart(value,
+                        width = width,
+                        fill = "#5A9A70",
+                        background = "#e1e1e1")
+            }
+          ), 
+        ref_lab = colDef(
+            name = "Available in ref. lab",
+            align = "left",
+            ### Add column border to left side of column
+            class = "border-left cell number",
+            # headerStyle = list(fontWeight = "500"),
+            cell = function(value) {
+              ### Calculate width of bar color to display
+              width <- paste0(value / max(table_data$ref_lab) * 100, "%")
+              bar_chart(value,
+                        width = width,
+                        fill = "#5A9A70",
+                        background = "#e1e1e1")
+            }
+          ),
+         hosp_lab = colDef(
+            name = "Available in hosp. lab",
+            align = "left",
+            ### Add column border to left side of column
+            class = "border-left cell number",
+            # headerStyle = list(fontWeight = "500"),
+            cell = function(value) {
+              ### Calculate width of bar color to display
+              width <- paste0(value / max(table_data$hosp_lab) * 100, "%")
+              bar_chart(value,
+                        width = width,
+                        fill = "#5A9A70",
+                        background = "#e1e1e1")
+            }
+          ), 
+         phc = colDef(
+            name = "Available in primary health clinic",
+            align = "left",
+            ### Add column border to left side of column
+            class = "border-left cell number",
+            # headerStyle = list(fontWeight = "500"),
+            cell = function(value) {
+              ### Calculate width of bar color to display
+              width <- paste0(value / max(table_data$phc) * 100, "%")
+              bar_chart(value,
+                        width = width,
+                        fill = "#5A9A70",
+                        background = "#e1e1e1")
+            }
+          ),
+        #  tpp_available = colDef(
+        #   name = "TPP available",
+        #   align = "center",
+        #   maxWidth = 50,
+        #   class = "cell number border-left ",
+        #   cell = function(value) {
+        #   ### For teams that were assigned a SoS_rating of 4 (highest rating), show a double-black diamond (note: there was no diamond icon available in the Font Awesome Free library, so the solution was to use a square icon and rotate it at a 45 degree angle)
+        #     if (value == 0) {
+        #       ### show a red circle
+        #       tagAppendAttributes(shiny::icon("circle"))
+        #       ### show a green circle
+        #     } else if (value == 1) {
+        #      tagAppendAttributes(shiny::icon("circle"))
+        #     } 
+        #   },
+        #   style = function(value) {
+        #     ### Assign colors to icons
+        #     if (value == 0) {
+        #       color <- "#D44F4E"
+        #     } else if (value == 1) {
+        #       color <- "#5A9A70"
+        #     } 
+        #     list(color = color)
+        #   }
+        # ),
+        tpp_available = colDef(
+          name = "TPP available",
+          cell = function(value) {
+          
+          # Render as an X mark or check mark
+          if (value == 1) "\u2714\ufe0f Yes" else "\u274c No"
+        }),
+         Rank = norm_rating_column(
+          style = color_scales(table_data, color_by = 'dx_readiness_index',
+                               colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+          dx_readiness_index = norm_rating_column(
+            name = "DxRI",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+        reg_approval_normalised = norm_rating_column(
+            name = "Reg. achieved",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+        reg_status_normalised = norm_rating_column(
+            name = "Reg. authorities",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+        planned_market_entry_normalised = norm_rating_column(
+            name = "Planned market entry",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+         ref_lab_normalised = norm_rating_column(
+            name = "Available in ref. lab",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+         hosp_lab_normalised = norm_rating_column(
+            name = "Available in hosp. lab",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+         phc_normalised = norm_rating_column(
+            name = "Available in primary health clinic",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          ),
+         tpp_available_normalised = norm_rating_column(
+            name = "Available TPP",
+            style = color_scales(table_data, colors = c("#FF8F28", "#FFFFFF","#C7C5A7","#5A9A70"))
+          )
+        )
+    
+)
+
+table
+
+
+# c("#5b254e", "#00a2ab", "#7b97a0", "#e64148", "#306e7c", "#9b2c4c", 
+# "#703d5f", "#00b0b7", "#91a5ad", "#ea645d", "#8f637b", "#6dc3c8", 
+# "#adbac0", "#f08d80")
+# 
+# c("#491E5D", "#489FA9", "#81969F", "#D44F4E", "#C7C5A7", "#FF8F28", 
+# "#5A9A70", "#FFCB00", "#354159", "#9C9AFF", "#865345", "#9AE9BA"
+# )
+
+```
+
+#### Questions regarding methodology and results
+
+-   Including COVID-19 in the framework, might create a false target for the other pathogens.
+-   Why are there cases where there is Regulatory achieved in the Stage of development, but no regulatory agency is captured? This is a question of data integrity checks at the level of the database. If we believe we can based an index to this dataset, then we should be absolutely sure the data is reflecting an up to date landscape.
+-   Regulatory achieved (reg_approval) and Number of regulatory authorities (reg_status) should not be present in the framework at the same time, we should make a decision which ones is more accurate and keep that.
+-   Should we consider adding an indicator reflecting the current number of tests under development? The idea is that if there are tests already under development, they could easier move in the product development phase with the right amount of investment. We could include the tests that are 1. Research use only, 2. Development, 3. Late Stage Development, 4. Validation, 5. Early Stage Development (partial prototype)
+-   Should we consider including an indicator to reflect the severity of the disease (i.e. mortality rate)?
+-   We should check if our index correlates with the total amount of funding per pathogen (100 Days mission) as a validation, but we should not include it in the generation of the index.
+
+## Limitations
+
+-   Limited options in terms of publicly available data to include for future development, we need a concerted effort to have a full landscape of data availability
+-   What is the different offering and innovative feature of DxRI?
+-   Internal delays for contracting partners/consultants to conduct landscapes, build website
+
+## Next steps
+
+-   Conduct a data availability landscape for pathogen specific data per country (to assess feasibility of Phase 2 below)
+    -   capture availability of data on disease burden
+    -   capture number of countries with availability of data on readiness and type of readiness data
+-   Development of website with [onetandem](https://www.onetandem.com/)
+    -   Phase 1: showcase the DxRI with each pathogen as an entry point, highlight the diagnostic landscape needs/gaps
+    -   Phase 2: include country specific data when available. Still the entry point should be each pathogen, and only relevant countries (i.e. countries with recorded outbreaks) should be included in a separate framework of readiness. Otherwise if we try to show readiness per country, it will not be representative of the situation, where not all pathogens are present across all countries.
