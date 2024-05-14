@@ -7,7 +7,7 @@ library(stringr)
 
 
 
-tpp_data <- read_excel("../TPP_outbreak_diseases.xlsx", sheet = "Sheet1") |>
+tpp_data <- read_excel("data/TPP_outbreak_diseases.xlsx", sheet = "Sheet1") |>
   select(disease_target = Value, tpp_available = TPP_Available)
 
 disease_pathogen_data <- read_csv("data/disease_pathogen_matches.csv") |>
@@ -64,7 +64,7 @@ last_update = c(
 ))
 
 
-sf_data <- read_csv("../report1713812286805_20240422.csv") |>
+sf_data <- read_csv("data/report1713812286805_20240422.csv") |>
   select(
     assay_id = `Assay: Assay ID`,
     country = `Assay: Company/Institution Name: Country`,
