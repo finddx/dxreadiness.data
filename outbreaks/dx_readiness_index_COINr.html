@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Will Becker">
+
+<title>DX Readiness Index</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="dx_readiness_index_COINr_files/libs/clipboard/clipboard.min.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/quarto-html/quarto.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/quarto-html/popper.min.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/quarto-html/anchor.min.js"></script>
+<link href="dx_readiness_index_COINr_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dx_readiness_index_COINr_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="dx_readiness_index_COINr_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="dx_readiness_index_COINr_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="dx_readiness_index_COINr_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="dx_readiness_index_COINr_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="dx_readiness_index_COINr_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="dx_readiness_index_COINr_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="dx_readiness_index_COINr_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="dx_readiness_index_COINr_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
+  <li><a href="#build-coin" id="toc-build-coin" class="nav-link" data-scroll-target="#build-coin">Build coin</a></li>
+  <li><a href="#indicator-analysis" id="toc-indicator-analysis" class="nav-link" data-scroll-target="#indicator-analysis">Indicator analysis</a></li>
+  <li><a href="#the-covid-question" id="toc-the-covid-question" class="nav-link" data-scroll-target="#the-covid-question">The COVID question</a></li>
+  <li><a href="#create-alternate-indexes" id="toc-create-alternate-indexes" class="nav-link" data-scroll-target="#create-alternate-indexes">Create alternate indexes</a>
+  <ul class="collapse">
+  <li><a href="#dx1" id="toc-dx1" class="nav-link" data-scroll-target="#dx1">DX1</a></li>
+  <li><a href="#dx2" id="toc-dx2" class="nav-link" data-scroll-target="#dx2">DX2</a></li>
+  <li><a href="#dx3" id="toc-dx3" class="nav-link" data-scroll-target="#dx3">DX3</a></li>
+  <li><a href="#dx4" id="toc-dx4" class="nav-link" data-scroll-target="#dx4">DX4</a></li>
+  <li><a href="#dx5" id="toc-dx5" class="nav-link" data-scroll-target="#dx5">DX5</a></li>
+  </ul></li>
+  <li><a href="#comparison" id="toc-comparison" class="nav-link" data-scroll-target="#comparison">Comparison</a></li>
+  <li><a href="#what-next" id="toc-what-next" class="nav-link" data-scroll-target="#what-next">What next</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DX Readiness Index</h1>
+<p class="subtitle lead">COINr calculations and alternative methodology</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Will Becker </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p>This is a quick construction of the DX Readiness Index (from here DXRI) which explores some potential methodologies and gives some commentary on the consequences of these decisions, with comparisons of results.</p>
+<p>The starting point of this document is the cleaned data set. I am not going to comment on the indicators themselves, since this is a matter for FIND experts. However, we can look into the statistical properties of the indicators and maybe provide some tips along the way.</p>
+<p>In this document I will build the index directly in R using the COINr package, rather than using the Composer app. This is because while Composer is a fast front-end for building composite indicators, working with COINr at the command line opens up many more advanced options which we will leverage here.</p>
+</section>
+<section id="read-data" class="level2">
+<h2 class="anchored" data-anchor-id="read-data">Read data</h2>
+<p>The data is found in the data folder. We read in both the indicator data, and the metadata, where the latter also contains the structure of the index. Together, these two tables comprise the inputs necessary to begin working with COINr.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iData <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"./data/dx_readiness_comp_data_20240514.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"iData"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iMeta <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"./data/dx_readiness_comp_data_20240514.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"iMeta"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># basic checks on these tables</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">check_iData</span>(iData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>iData checked and OK.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_iMeta</span>(iMeta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>iMeta checked and OK.</code></pre>
+</div>
+</div>
+</section>
+<section id="build-coin" class="level2">
+<h2 class="anchored" data-anchor-id="build-coin">Build coin</h2>
+<p>We can now construct a “coin”, which is the central object used in COINr. This coin will be used in most or all subsequent operations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>DX <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(iData, iMeta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>iData checked and OK.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>iMeta checked and OK.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Raw</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise contents</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>DX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--------------
+A coin with...
+--------------
+Input:
+  Units: 21 (u_1, u_10, u_11, ...)
+  Indicators: 7 (planned_market_entry, reg_status_approval, dev_status, ...)
+  Denominators: 0 ()
+  Groups: 2 (disease_target, transmission_mode)
+
+Structure:
+  Level 1 : 7 indicators (dev_status, lab_based, near_poc, ...) 
+  Level 2 : 1 groups (dx_readiness_index) 
+
+Data sets:
+  Raw (21 units)</code></pre>
+</div>
+</div>
+<p>The summary shows that we currently have 21 units (the diseases), and 7 indicators. We also have two grouping variables. The structure of the index is simply to aggregate these seven indicators into the index without any intermediate levels:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(iCOINr)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">iplot_framework</span>(DX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7c46dd9885c64ca3ff18" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-7c46dd9885c64ca3ff18">{"x":{"visdat":{"27744297750":["function () ","plotlyVisDat"]},"cur_data":"27744297750","attrs":{"27744297750":{"labels":["planned_market_entry","reg_status_approval","dev_status","lab_based","near_poc","true_poc","tpp_available"],"parents":["dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index"],"values":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143],"branchvalues":"total","text":["Planned market entry","Regulatory approval","Under development","Lab-based","Near POC","True POC","TPP available"],"hoverinfo":"text","texttemplate":"%{label}","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sunburst"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["planned_market_entry","reg_status_approval","dev_status","lab_based","near_poc","true_poc","tpp_available"],"parents":["dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index"],"values":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143],"branchvalues":"total","text":["Planned market entry","Regulatory approval","Under development","Lab-based","Near POC","True POC","TPP available"],"hoverinfo":["text","text","text","text","text","text","text"],"texttemplate":["%{label}","%{label}","%{label}","%{label}","%{label}","%{label}","%{label}"],"type":"sunburst","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>A first suggestion here is to think carefully about the relative importance of indicators, as this has an impact on the results. Currently, indicators are equally weighted, however it might be that some indicators are more important than others. In doing this, it is very important to be precise about what the index intends to measure, what decisions will be made based on its results, and who the end users might be. Establishing these things early on will help to guide the methodological decisions later.</p>
+<p>If we wish to change the relative importance of indicators, we can either:</p>
+<ol type="1">
+<li>Change indicator weights</li>
+<li>Change the structure of the index (e.g.&nbsp;grouping indicators into dimensions)</li>
+<li>Add/remove indicators</li>
+</ol>
+<p>Overall consider that changing the importance of indicators is not just achieved through playing with weights, and in fact it is probably better if possible to adjust the index structure as this keeps things cleaner.</p>
+</section>
+<section id="indicator-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="indicator-analysis">Indicator analysis</h2>
+<p>We run a quick analysis on the indicators to better understand their distributions. Begin by checking the basic statistics of each indicator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_stats <span class="ot">&lt;-</span> <span class="fu">get_stats</span>(DX, <span class="at">dset =</span> <span class="st">"Raw"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 iCode Min  Max    Mean Median     Std Skew   Kurt N.Avail
+1 planned_market_entry   3 2620 221.000     73 558.000 4.34 19.400      21
+2  reg_status_approval   0  979  65.600      8 212.000 4.40 19.800      21
+3           dev_status   0  138   8.620      0  29.800 4.49 20.400      21
+4            lab_based   0  949  98.700     50 199.000 4.25 18.800      21
+5             near_poc   0  254  22.400      6  54.400 4.23 18.700      21
+6             true_poc   0 1200  95.000     12 261.000 4.19 18.300      21
+7        tpp_available   0    1   0.238      0   0.436 1.33 -0.276      21
+  N.NonZero N.Unique N.Same Frc.Avail Frc.NonZero Frc.Unique Frc.Same
+1        21       20      2         1       1.000     0.9520   0.0952
+2        20       16      2         1       0.952     0.7620   0.0952
+3        10        7     11         1       0.476     0.3330   0.5240
+4        20       19      2         1       0.952     0.9050   0.0952
+5        19       14      3         1       0.905     0.6670   0.1430
+6        18       15      3         1       0.857     0.7140   0.1430
+7         5        2     16         1       0.238     0.0952   0.7620
+  Flag.Avail Flag.NonZero Flag.Unique Flag.SkewKurt
+1         ok           ok          ok           OUT
+2         ok           ok          ok           OUT
+3         ok          LOW         LOW           OUT
+4         ok           ok          ok           OUT
+5         ok           ok          ok           OUT
+6         ok           ok          ok           OUT
+7         ok          LOW         LOW            ok</code></pre>
+</div>
+</div>
+<p>The summary table shows that all indicators have 100% data availability, but most are strongly skewed. We can examine this further by plotting the distributions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_dist</span>(DX, <span class="at">dset =</span> <span class="st">"Raw"</span>, <span class="at">iCodes =</span> <span class="st">"dx_readiness_index"</span>, <span class="at">Level =</span> <span class="dv">1</span>,<span class="at">type =</span> <span class="st">"Histogram"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The plots show the strong skew is mostly to do with one or two outliers in each case. E.g.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">iplot_scatter</span>(DX, <span class="at">dsets =</span> <span class="st">"Raw"</span>, <span class="at">iCodes =</span> <span class="fu">c</span>(<span class="st">"dev_status"</span>, <span class="st">"planned_market_entry"</span>),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Levels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b0d10267680d19a5efd4" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b0d10267680d19a5efd4">{"x":{"visdat":{"277437e51ba3":["function () ","plotlyVisDat"]},"cur_data":"277437e51ba3","attrs":{"277437e51ba3":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"277437e51ba3.1":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":{},"y":{},"text":["<b>Chikungunya Virus<\/b><br>dev_status: 0<br>planned_market_entry: 61","<b>Marburg Virus<\/b><br>dev_status: 1<br>planned_market_entry: 29","<b>Measles Morbillivirus<\/b><br>dev_status: 0<br>planned_market_entry: 113","<b>Neisseria Meningitidis<\/b><br>dev_status: 0<br>planned_market_entry: 41","<b>Middle East Respiratory Coronavirus<\/b><br>dev_status: 0<br>planned_market_entry: 3","<b>Mpox Virus<\/b><br>dev_status: 9<br>planned_market_entry: 44","<b>Salmonella Paratyphi<\/b><br>dev_status: 0<br>planned_market_entry: 40","<b>Rubella Virus<\/b><br>dev_status: 0<br>planned_market_entry: 199","<b>Salmonella Enterica<\/b><br>dev_status: 0<br>planned_market_entry: 9","<b>Salmonella Spp.<\/b><br>dev_status: 0<br>planned_market_entry: 80","<b>Salmonella Typhi<\/b><br>dev_status: 0<br>planned_market_entry: 139","<b>Vibrio Cholerae<\/b><br>dev_status: 0<br>planned_market_entry: 105","<b>Yellow Fever Virus<\/b><br>dev_status: 0<br>planned_market_entry: 74","<b>Zika Virus<\/b><br>dev_status: 1<br>planned_market_entry: 47","<b>Sars-Cov-2<\/b><br>dev_status: 138<br>planned_market_entry: 2616","<b>Crimean Congo Hemorrhagic Fever Virus<\/b><br>dev_status: 1<br>planned_market_entry: 44","<b>Dengue Virus<\/b><br>dev_status: 10<br>planned_market_entry: 454","<b>Ebola Virus<\/b><br>dev_status: 6<br>planned_market_entry: 73","<b>Influenza A<\/b><br>dev_status: 7<br>planned_market_entry: 216","<b>Influenza B<\/b><br>dev_status: 7<br>planned_market_entry: 215","<b>Lassa Virus<\/b><br>dev_status: 1<br>planned_market_entry: 37"],"hoverinfo":"text","marker":{"size":12,"color":"rgba(10,77,104,0.5)"},"showlegend":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"showlegend":false,"xaxis":{"domain":[0,1],"automargin":true,"title":"Under development","type":"linear"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Planned market entry","type":"linear"},"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"mode":"markers","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"mode":"markers","type":"scatter","x":[0,1,0,0,0,9,0,0,0,0,0,0,0,1,138,1,10,6,7,7,1],"y":[61,29,113,41,3,44,40,199,9,80,139,105,74,47,2616,44,454,73,216,215,37],"text":["<b>Chikungunya Virus<\/b><br>dev_status: 0<br>planned_market_entry: 61","<b>Marburg Virus<\/b><br>dev_status: 1<br>planned_market_entry: 29","<b>Measles Morbillivirus<\/b><br>dev_status: 0<br>planned_market_entry: 113","<b>Neisseria Meningitidis<\/b><br>dev_status: 0<br>planned_market_entry: 41","<b>Middle East Respiratory Coronavirus<\/b><br>dev_status: 0<br>planned_market_entry: 3","<b>Mpox Virus<\/b><br>dev_status: 9<br>planned_market_entry: 44","<b>Salmonella Paratyphi<\/b><br>dev_status: 0<br>planned_market_entry: 40","<b>Rubella Virus<\/b><br>dev_status: 0<br>planned_market_entry: 199","<b>Salmonella Enterica<\/b><br>dev_status: 0<br>planned_market_entry: 9","<b>Salmonella Spp.<\/b><br>dev_status: 0<br>planned_market_entry: 80","<b>Salmonella Typhi<\/b><br>dev_status: 0<br>planned_market_entry: 139","<b>Vibrio Cholerae<\/b><br>dev_status: 0<br>planned_market_entry: 105","<b>Yellow Fever Virus<\/b><br>dev_status: 0<br>planned_market_entry: 74","<b>Zika Virus<\/b><br>dev_status: 1<br>planned_market_entry: 47","<b>Sars-Cov-2<\/b><br>dev_status: 138<br>planned_market_entry: 2616","<b>Crimean Congo Hemorrhagic Fever Virus<\/b><br>dev_status: 1<br>planned_market_entry: 44","<b>Dengue Virus<\/b><br>dev_status: 10<br>planned_market_entry: 454","<b>Ebola Virus<\/b><br>dev_status: 6<br>planned_market_entry: 73","<b>Influenza A<\/b><br>dev_status: 7<br>planned_market_entry: 216","<b>Influenza B<\/b><br>dev_status: 7<br>planned_market_entry: 215","<b>Lassa Virus<\/b><br>dev_status: 1<br>planned_market_entry: 37"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(10,77,104,0.5)","size":12,"line":{"color":"rgba(255,127,14,1)"}},"showlegend":false,"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Hovering over the outlier we see it is COVID, which has outlying values for most/all indicators.</p>
+</section>
+<section id="the-covid-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-covid-question">The COVID question</h2>
+<p>The question then arises: what to do about this outlying point? As mentioned before, we need to go back to the objectives of the index to help us decide. We have three basic options with regard to this point:</p>
+<ol type="1">
+<li>Leave it as it is.</li>
+<li>Use outlier treatment (Winsorisation) which will reassign it to have the values of the next highest point in each indicator.</li>
+<li>Remove it from the index completely.</li>
+</ol>
+<p>If we go with (1), the consequence will be that for most diseases, the scores will be quite low, whereas for COVID this will have the maximum or near-maximum score. In other words, COVID will end up somehow “defining” the index. This may or may not be desirable, again depending on how we want to present the results.</p>
+<p>Going with (2), this would effectively convert COVID to look like the disease with the next highest values for each indicator. By inspection from the data, COVID would probably be “transformed” to look like Dengue. This might sound radical but consider that the index should always be presented <em>along side</em> the raw data - we use the index as the “headline” but we should always go back to the raw data when making important decisions.</p>
+<p>If we go with (3) then out outlier “problem” is solved but we lose the ability to compare our diseases with COVID.</p>
+<p>Consider that the results will probably not change greatly, in terms of the rankings of diseases in the index, whether COVID is kept in or out of the index. The point is whether the index should reflect the context of COVID or not.</p>
+<p>The final decision should be taken by FIND experts, but what I can do here is to generate several parallel indexes, which can be used to see what the results will be under different approaches, and how much they actually differ. We will therefore check the following alternatives, which also consider variations in the normalisation method, which also can have an effect on outliers.</p>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Index</strong></th>
+<th><strong>COVID</strong></th>
+<th><strong>Winsorisation</strong></th>
+<th><strong>Normalisation</strong></th>
+<th><strong>Comment</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DX1</td>
+<td>Included</td>
+<td>No</td>
+<td>Min-max</td>
+<td>No form of outlier treatment applied to COVID</td>
+</tr>
+<tr class="even">
+<td>DX2</td>
+<td>Included</td>
+<td>Yes</td>
+<td>Min-max</td>
+<td>COVID will be Winsorised</td>
+</tr>
+<tr class="odd">
+<td>DX3</td>
+<td>Included</td>
+<td>No</td>
+<td>Percentage ranks</td>
+<td>COVID treated via rank-normalisation</td>
+</tr>
+<tr class="even">
+<td>DX4</td>
+<td>Included</td>
+<td>No</td>
+<td>Distance to COVID</td>
+<td>COVID is used as an ideal case “target” for all diseases</td>
+</tr>
+<tr class="odd">
+<td>DX5</td>
+<td>Excluded</td>
+<td>No</td>
+<td>Min-max</td>
+<td>Excluding COVID, we don’t need to treat outliers in any way</td>
+</tr>
+</tbody>
+</table>
+<p>Here, using a rank normalisation method will flatten the distribution of each indicator, making outlier treatment unnecessary. In DX4 we will also use a normalisation approach which uses COVID as a benchmark, and normalises each indicator as the distance to its value.</p>
+<p>We now copy the current coin so that we can make these five alternatives.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>DX1 <span class="ot">&lt;-</span> DX2 <span class="ot">&lt;-</span> DX3 <span class="ot">&lt;-</span> DX4 <span class="ot">&lt;-</span> DX5 <span class="ot">&lt;-</span> DX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-alternate-indexes" class="level2">
+<h2 class="anchored" data-anchor-id="create-alternate-indexes">Create alternate indexes</h2>
+<p>Here we calculate index results for each alternative. In the next section we will display and compare the results.</p>
+<section id="dx1" class="level3">
+<h3 class="anchored" data-anchor-id="dx1">DX1</h3>
+<p>In DX1 we just normalise directly and calculate the index. By default, this normalises using min-max and onto the <span class="math inline">\([0,100]\)</span> interval. We then simply aggregate as the arithmetic mean of the normalised indicators.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>DX1 <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(DX1, <span class="at">dset =</span> <span class="st">"Raw"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Normalised</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>DX1 <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(DX1, <span class="at">dset =</span> <span class="st">"Normalised"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Aggregated</code></pre>
+</div>
+</div>
+<p>A quick view of the results of this index looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_results</span>(DX1, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">also_get =</span> <span class="st">"uName"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 55%">
+<col style="width: 27%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">uCode</th>
+<th style="text-align: left;">uName</th>
+<th style="text-align: right;">dx_readiness_index</th>
+<th style="text-align: right;">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">u_3</td>
+<td style="text-align: left;">Sars-Cov-2</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_14</td>
+<td style="text-align: left;">Mpox Virus</td>
+<td style="text-align: right;">18.55</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_2</td>
+<td style="text-align: left;">Vibrio Cholerae</td>
+<td style="text-align: right;">17.15</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_20</td>
+<td style="text-align: left;">Yellow Fever Virus</td>
+<td style="text-align: right;">16.13</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_12</td>
+<td style="text-align: left;">Neisseria Meningitidis</td>
+<td style="text-align: right;">15.18</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_5</td>
+<td style="text-align: left;">Dengue Virus</td>
+<td style="text-align: right;">11.16</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_7</td>
+<td style="text-align: left;">Influenza A</td>
+<td style="text-align: right;">8.06</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_8</td>
+<td style="text-align: left;">Influenza B</td>
+<td style="text-align: right;">8.05</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_16</td>
+<td style="text-align: left;">Rubella Virus</td>
+<td style="text-align: right;">4.27</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_19</td>
+<td style="text-align: left;">Salmonella Typhi</td>
+<td style="text-align: right;">3.66</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_6</td>
+<td style="text-align: left;">Ebola Virus</td>
+<td style="text-align: right;">2.78</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_11</td>
+<td style="text-align: left;">Measles Morbillivirus</td>
+<td style="text-align: right;">2.54</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_18</td>
+<td style="text-align: left;">Salmonella Spp.</td>
+<td style="text-align: right;">1.95</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_1</td>
+<td style="text-align: left;">Chikungunya Virus</td>
+<td style="text-align: right;">1.60</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_21</td>
+<td style="text-align: left;">Zika Virus</td>
+<td style="text-align: right;">1.32</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_4</td>
+<td style="text-align: left;">Crimean Congo Hemorrhagic Fever Virus</td>
+<td style="text-align: right;">1.14</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_9</td>
+<td style="text-align: left;">Lassa Virus</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_15</td>
+<td style="text-align: left;">Salmonella Paratyphi</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_17</td>
+<td style="text-align: left;">Salmonella Enterica</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_13</td>
+<td style="text-align: left;">Middle East Respiratory Coronavirus</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX1, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="dx2" class="level3">
+<h3 class="anchored" data-anchor-id="dx2">DX2</h3>
+<p>In DX2 we do the same, but additionally apply outlier treatment before normalising and aggregating.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>DX2 <span class="ot">&lt;-</span> <span class="fu">qTreat</span>(DX2, <span class="at">dset =</span> <span class="st">"Raw"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Treated</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check what happened</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>DX2<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round_df</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 iCode check_SkewKurt0.Pass check_SkewKurt0.Skew
+1 planned_market_entry                FALSE                 4.34
+2  reg_status_approval                FALSE                 4.40
+3           dev_status                FALSE                 4.49
+4            lab_based                FALSE                 4.25
+5             near_poc                FALSE                 4.23
+6             true_poc                FALSE                 4.19
+7        tpp_available                 TRUE                 1.33
+  check_SkewKurt0.Kurt winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew
+1                19.39              1                 TRUE                 1.89
+2                19.77              1                 TRUE                 2.04
+3                20.38              1                 TRUE                 1.17
+4                18.80              1                 TRUE                 1.22
+5                18.65              1                 TRUE                 1.07
+6                18.27              1                 TRUE                 2.00
+7                -0.28             NA                   NA                   NA
+  check_SkewKurt1.Kurt
+1                 3.09
+2                 2.68
+3                -0.38
+4                 1.02
+5                -0.34
+6                 3.35
+7                   NA</code></pre>
+</div>
+</div>
+<p>This table shows that all indicators except “tpp_available” were not within the “acceptable” skew and kurtosis limits of 2 and 3.5 respectively. As a result, Winorisation was applied to these indicators. After Winsorising 1 point in each indicator (COVID), no further outliers were identified.</p>
+<p>Now we normalise and aggregate as in DX1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>DX2 <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(DX2, <span class="at">dset =</span> <span class="st">"Treated"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Normalised</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>DX2 <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(DX2, <span class="at">dset =</span> <span class="st">"Normalised"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Aggregated</code></pre>
+</div>
+</div>
+<p>A quick view of the results of this index looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_results</span>(DX2, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">also_get =</span> <span class="st">"uName"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 55%">
+<col style="width: 27%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">uCode</th>
+<th style="text-align: left;">uName</th>
+<th style="text-align: right;">dx_readiness_index</th>
+<th style="text-align: right;">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">u_3</td>
+<td style="text-align: left;">Sars-Cov-2</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_5</td>
+<td style="text-align: left;">Dengue Virus</td>
+<td style="text-align: right;">70.28</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_7</td>
+<td style="text-align: left;">Influenza A</td>
+<td style="text-align: right;">56.58</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_8</td>
+<td style="text-align: left;">Influenza B</td>
+<td style="text-align: right;">56.55</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_14</td>
+<td style="text-align: left;">Mpox Virus</td>
+<td style="text-align: right;">47.11</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_2</td>
+<td style="text-align: left;">Vibrio Cholerae</td>
+<td style="text-align: right;">31.26</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_20</td>
+<td style="text-align: left;">Yellow Fever Virus</td>
+<td style="text-align: right;">24.99</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_16</td>
+<td style="text-align: left;">Rubella Virus</td>
+<td style="text-align: right;">23.77</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_6</td>
+<td style="text-align: left;">Ebola Virus</td>
+<td style="text-align: right;">21.44</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_19</td>
+<td style="text-align: left;">Salmonella Typhi</td>
+<td style="text-align: right;">21.22</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_12</td>
+<td style="text-align: left;">Neisseria Meningitidis</td>
+<td style="text-align: right;">19.27</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_11</td>
+<td style="text-align: left;">Measles Morbillivirus</td>
+<td style="text-align: right;">14.47</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_18</td>
+<td style="text-align: left;">Salmonella Spp.</td>
+<td style="text-align: right;">11.27</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_1</td>
+<td style="text-align: left;">Chikungunya Virus</td>
+<td style="text-align: right;">9.38</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_21</td>
+<td style="text-align: left;">Zika Virus</td>
+<td style="text-align: right;">8.49</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_4</td>
+<td style="text-align: left;">Crimean Congo Hemorrhagic Fever Virus</td>
+<td style="text-align: right;">7.33</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_9</td>
+<td style="text-align: left;">Lassa Virus</td>
+<td style="text-align: right;">6.52</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">6.19</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_15</td>
+<td style="text-align: left;">Salmonella Paratyphi</td>
+<td style="text-align: right;">5.57</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_13</td>
+<td style="text-align: left;">Middle East Respiratory Coronavirus</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_17</td>
+<td style="text-align: left;">Salmonella Enterica</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX2, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="dx3" class="level3">
+<h3 class="anchored" data-anchor-id="dx3">DX3</h3>
+<p>Next we deal with DX3, which has no outlier treatment, but applies percentage-rank normalisation. This automatically treats outliers since each indicator is converted to its ranks, flattening all distributions. This option can be useful if we are not especially interested in the shape of distributions, but more in who is at the top and bottom.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>DX3 <span class="ot">&lt;-</span> <span class="fu">qNormalise</span>(DX3, <span class="at">dset =</span> <span class="st">"Raw"</span>, <span class="at">f_n =</span> <span class="st">"n_prank"</span>, <span class="at">f_n_para =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Normalised</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>DX3 <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(DX3, <span class="at">dset =</span> <span class="st">"Normalised"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Aggregated</code></pre>
+</div>
+</div>
+<p>A quick view of the results of this index looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_results</span>(DX3, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">also_get =</span> <span class="st">"uName"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 55%">
+<col style="width: 27%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">uCode</th>
+<th style="text-align: left;">uName</th>
+<th style="text-align: right;">dx_readiness_index</th>
+<th style="text-align: right;">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">u_3</td>
+<td style="text-align: left;">Sars-Cov-2</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_5</td>
+<td style="text-align: left;">Dengue Virus</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_7</td>
+<td style="text-align: left;">Influenza A</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_8</td>
+<td style="text-align: left;">Influenza B</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_14</td>
+<td style="text-align: left;">Mpox Virus</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_2</td>
+<td style="text-align: left;">Vibrio Cholerae</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_6</td>
+<td style="text-align: left;">Ebola Virus</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_20</td>
+<td style="text-align: left;">Yellow Fever Virus</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_16</td>
+<td style="text-align: left;">Rubella Virus</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_19</td>
+<td style="text-align: left;">Salmonella Typhi</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_18</td>
+<td style="text-align: left;">Salmonella Spp.</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_11</td>
+<td style="text-align: left;">Measles Morbillivirus</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_21</td>
+<td style="text-align: left;">Zika Virus</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_1</td>
+<td style="text-align: left;">Chikungunya Virus</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_12</td>
+<td style="text-align: left;">Neisseria Meningitidis</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_15</td>
+<td style="text-align: left;">Salmonella Paratyphi</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_4</td>
+<td style="text-align: left;">Crimean Congo Hemorrhagic Fever Virus</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_9</td>
+<td style="text-align: left;">Lassa Virus</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_13</td>
+<td style="text-align: left;">Middle East Respiratory Coronavirus</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_17</td>
+<td style="text-align: left;">Salmonella Enterica</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX3, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="dx4" class="level3">
+<h3 class="anchored" data-anchor-id="dx4">DX4</h3>
+<p>In DX4 we don’t attempt to alter the values of COVID, but instead use it as a benchmark for other diseases. This is done using COINr’s distance to a reference function. Due to the way it is set up, we need to pass it the row number in the raw data where COVID is located.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row index of COVID in the raw data set</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># be careful if the name/code of COVID changes!</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>iCOVID <span class="ot">&lt;-</span> <span class="fu">which</span>(DX4<span class="sc">$</span>Data<span class="sc">$</span>Raw<span class="sc">$</span>uCode <span class="sc">==</span> <span class="st">"u_3"</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise using distance to COVID</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>DX4 <span class="ot">&lt;-</span> <span class="fu">qNormalise</span>(DX4, <span class="at">dset =</span> <span class="st">"Raw"</span>, <span class="at">f_n =</span> <span class="st">"n_dist2ref"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> iCOVID,  <span class="co"># COVID is set as benchmark</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">cap_max =</span> <span class="cn">TRUE</span>)) <span class="co"># If value exceeds COVID, capped at 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Normalised</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>DX4 <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(DX4, <span class="at">dset =</span> <span class="st">"Normalised"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Aggregated</code></pre>
+</div>
+</div>
+<p>The results here will be on the <span class="math inline">\([0,1]\)</span> scale. A quick view of the results of this index looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_results</span>(DX4, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">also_get =</span> <span class="st">"uName"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 55%">
+<col style="width: 27%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">uCode</th>
+<th style="text-align: left;">uName</th>
+<th style="text-align: right;">dx_readiness_index</th>
+<th style="text-align: right;">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">u_3</td>
+<td style="text-align: left;">Sars-Cov-2</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_14</td>
+<td style="text-align: left;">Mpox Virus</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_2</td>
+<td style="text-align: left;">Vibrio Cholerae</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_20</td>
+<td style="text-align: left;">Yellow Fever Virus</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_12</td>
+<td style="text-align: left;">Neisseria Meningitidis</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_5</td>
+<td style="text-align: left;">Dengue Virus</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_7</td>
+<td style="text-align: left;">Influenza A</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_8</td>
+<td style="text-align: left;">Influenza B</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_16</td>
+<td style="text-align: left;">Rubella Virus</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_19</td>
+<td style="text-align: left;">Salmonella Typhi</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_6</td>
+<td style="text-align: left;">Ebola Virus</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_11</td>
+<td style="text-align: left;">Measles Morbillivirus</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_18</td>
+<td style="text-align: left;">Salmonella Spp.</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_1</td>
+<td style="text-align: left;">Chikungunya Virus</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_21</td>
+<td style="text-align: left;">Zika Virus</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_4</td>
+<td style="text-align: left;">Crimean Congo Hemorrhagic Fever Virus</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_9</td>
+<td style="text-align: left;">Lassa Virus</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_15</td>
+<td style="text-align: left;">Salmonella Paratyphi</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_17</td>
+<td style="text-align: left;">Salmonella Enterica</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_13</td>
+<td style="text-align: left;">Middle East Respiratory Coronavirus</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX4, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="dx5" class="level3">
+<h3 class="anchored" data-anchor-id="dx5">DX5</h3>
+<p>Finally in DX5 we simply exclude COVID completely. There are various ways to do this in COINr, but to keep things simple I’ll just remove it from the input data frame and rebuild.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove COVID row.</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>iData_ <span class="ot">&lt;-</span> iData[iData<span class="sc">$</span>uCode <span class="sc">!=</span> <span class="st">"u_3"</span>, ]</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rebuild coin</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>DX5 <span class="ot">&lt;-</span>  <span class="fu">new_coin</span>(iData_, iMeta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>iData checked and OK.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>iMeta checked and OK.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Raw</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise and aggregate</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>DX5 <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(DX5, <span class="at">dset =</span> <span class="st">"Raw"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Normalised</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>DX5 <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(DX5, <span class="at">dset =</span> <span class="st">"Normalised"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Written data set to .$Data$Aggregated</code></pre>
+</div>
+</div>
+<p>A quick view of the results of this index looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_results</span>(DX5, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">also_get =</span> <span class="st">"uName"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 55%">
+<col style="width: 27%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">uCode</th>
+<th style="text-align: left;">uName</th>
+<th style="text-align: right;">dx_readiness_index</th>
+<th style="text-align: right;">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">u_5</td>
+<td style="text-align: left;">Dengue Virus</td>
+<td style="text-align: right;">70.28</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_7</td>
+<td style="text-align: left;">Influenza A</td>
+<td style="text-align: right;">56.58</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_8</td>
+<td style="text-align: left;">Influenza B</td>
+<td style="text-align: right;">56.55</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_14</td>
+<td style="text-align: left;">Mpox Virus</td>
+<td style="text-align: right;">47.11</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_2</td>
+<td style="text-align: left;">Vibrio Cholerae</td>
+<td style="text-align: right;">31.26</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_20</td>
+<td style="text-align: left;">Yellow Fever Virus</td>
+<td style="text-align: right;">24.99</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_16</td>
+<td style="text-align: left;">Rubella Virus</td>
+<td style="text-align: right;">23.77</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_6</td>
+<td style="text-align: left;">Ebola Virus</td>
+<td style="text-align: right;">21.44</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_19</td>
+<td style="text-align: left;">Salmonella Typhi</td>
+<td style="text-align: right;">21.22</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_12</td>
+<td style="text-align: left;">Neisseria Meningitidis</td>
+<td style="text-align: right;">19.27</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_11</td>
+<td style="text-align: left;">Measles Morbillivirus</td>
+<td style="text-align: right;">14.47</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_18</td>
+<td style="text-align: left;">Salmonella Spp.</td>
+<td style="text-align: right;">11.27</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_1</td>
+<td style="text-align: left;">Chikungunya Virus</td>
+<td style="text-align: right;">9.38</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_21</td>
+<td style="text-align: left;">Zika Virus</td>
+<td style="text-align: right;">8.49</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_4</td>
+<td style="text-align: left;">Crimean Congo Hemorrhagic Fever Virus</td>
+<td style="text-align: right;">7.33</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_9</td>
+<td style="text-align: left;">Lassa Virus</td>
+<td style="text-align: right;">6.52</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">6.19</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_15</td>
+<td style="text-align: left;">Salmonella Paratyphi</td>
+<td style="text-align: right;">5.57</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_13</td>
+<td style="text-align: left;">Middle East Respiratory Coronavirus</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_17</td>
+<td style="text-align: left;">Salmonella Enterica</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">20</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX5, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="comparison" class="level2">
+<h2 class="anchored" data-anchor-id="comparison">Comparison</h2>
+<p>We can make a direct comparison of the results by putting the index ranks side-by-side for each index. Since the normalisation methods produce scores on different scales, we will compare using ranks.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>l_DX <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">DX1 =</span> DX1, <span class="at">DX2 =</span> DX2, <span class="at">DX3 =</span> DX3, <span class="at">DX4 =</span> DX4, <span class="at">DX5 =</span> DX5)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_coins_multi</span>(l_DX, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">also_get =</span> <span class="st">"uName"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">uCode</th>
+<th style="text-align: left;">uName</th>
+<th style="text-align: right;">DX1</th>
+<th style="text-align: right;">DX2</th>
+<th style="text-align: right;">DX3</th>
+<th style="text-align: right;">DX4</th>
+<th style="text-align: right;">DX5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">u_3</td>
+<td style="text-align: left;">Sars-Cov-2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_14</td>
+<td style="text-align: left;">Mpox Virus</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_2</td>
+<td style="text-align: left;">Vibrio Cholerae</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_20</td>
+<td style="text-align: left;">Yellow Fever Virus</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_12</td>
+<td style="text-align: left;">Neisseria Meningitidis</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_5</td>
+<td style="text-align: left;">Dengue Virus</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_7</td>
+<td style="text-align: left;">Influenza A</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_8</td>
+<td style="text-align: left;">Influenza B</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_16</td>
+<td style="text-align: left;">Rubella Virus</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_19</td>
+<td style="text-align: left;">Salmonella Typhi</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_6</td>
+<td style="text-align: left;">Ebola Virus</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_11</td>
+<td style="text-align: left;">Measles Morbillivirus</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_18</td>
+<td style="text-align: left;">Salmonella Spp.</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_1</td>
+<td style="text-align: left;">Chikungunya Virus</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_21</td>
+<td style="text-align: left;">Zika Virus</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_4</td>
+<td style="text-align: left;">Crimean Congo Hemorrhagic Fever Virus</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_9</td>
+<td style="text-align: left;">Lassa Virus</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_15</td>
+<td style="text-align: left;">Salmonella Paratyphi</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u_17</td>
+<td style="text-align: left;">Salmonella Enterica</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_13</td>
+<td style="text-align: left;">Middle East Respiratory Coronavirus</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">19</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The results show that although there are some differences between the alternative indexes, some messages remain fairly consistent. COVID always has the highest rank, and the diseases with the lowest two ranks (presumably those in most need of attention) are invariably Middle East Respiratory Coronavirus and Salmonella Enterica. There is some variation in the middle-ranking diseases: e.g.&nbsp;Neisseria Meningitidis varies quite a lot based on the methodology - likely this is due to it having somewhat outlying values in one or more indicators, which are changed quite considerably by the outlier-treatment approaches in DX2 and DX3. However we should dig into the underlying data to understand what is going on in each case.</p>
+<p>Of course consider what these results do and don’t say. They are only based on the indicators given, and presuming the accuracy of that data. The results do not account for e.g.&nbsp;the potential severity of an outbreak of each disease, the transmission mode and so on. It is very important to understand the limitations of a composite indicator in order to make sensible conclusions based on these results.</p>
+</section>
+<section id="what-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-next">What next</h2>
+<p>This was simply a short study to investigate some alternative methodologies and show the differences in results. We have found that the key results are fairly steady across methodological variations.</p>
+<p>However if the index is to be extended to other diseases and possibly other indicators, it is worth carefully examining the results and deciding on a preferred methodology. All of the methodologies here are potentially valid, and the decision should be taken by FIND experts.</p>
+<p>One might find some interest in either DX4 or DX5. In the former, we use COVID as a benchmark - this has the advantage that the index scores have a clear meaning, such that they index means “how far the disease is from COVID”. This could potentially risk sending the message that we should aim to have COVID numbers for all diseases, but this will depend on the audience of the index. In DX5, we instead exclude COVID completely, perhaps on the basis that it is also conceptually an outlier in terms of diseases.</p>
+<p>Overall it is worth aiming for simplicity in an index, because this helps to explain to stakeholders what is going on. This is why although outlier treatment can make sense from a statistical perspective, it can sometimes be better to avoid it if possible, as it can cause confusion with end-users.</p>
+<p>A potential alternative methodology not explored here would be to assign targets for each indicator based on expert consensus. This approach is used in other indexes such as the European Skills Index. However this approach hinges on having these targets established for each indicator, and requires a consensus between experts and subsequent buy-in from the index consumers.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,285 @@
+---
+title: "DX Readiness Index"
+subtitle: "COINr calculations and alternative methodology"
+author: "Will Becker"
+format: html
+toc: true
+---
+
+## Intro
+
+This is a quick construction of the DX Readiness Index (from here DXRI) which explores some potential methodologies and gives some commentary on the consequences of these decisions, with comparisons of results.
+
+The starting point of this document is the cleaned data set. I am not going to comment on the indicators themselves, since this is a matter for FIND experts. However, we can look into the statistical properties of the indicators and maybe provide some tips along the way.
+
+In this document I will build the index directly in R using the COINr package, rather than using the Composer app. This is because while Composer is a fast front-end for building composite indicators, working with COINr at the command line opens up many more advanced options which we will leverage here.
+
+## Read data
+
+The data is found in the data folder. We read in both the indicator data, and the metadata, where the latter also contains the structure of the index. Together, these two tables comprise the inputs necessary to begin working with COINr.
+
+```{r}
+iData <- readxl::read_excel("./data/dx_readiness_comp_data_20240514.xlsx", sheet = "iData")
+iMeta <- readxl::read_excel("./data/dx_readiness_comp_data_20240514.xlsx", sheet = "iMeta")
+
+library(COINr)
+
+# basic checks on these tables
+check_iData(iData)
+check_iMeta(iMeta)
+```
+
+## Build coin
+
+We can now construct a "coin", which is the central object used in COINr. This coin will be used in most or all subsequent operations.
+
+```{r}
+DX <- new_coin(iData, iMeta)
+
+# summarise contents
+DX
+```
+
+The summary shows that we currently have 21 units (the diseases), and 7 indicators. We also have two grouping variables. The structure of the index is simply to aggregate these seven indicators into the index without any intermediate levels:
+
+```{r}
+library(iCOINr)
+iplot_framework(DX)
+```
+
+A first suggestion here is to think carefully about the relative importance of indicators, as this has an impact on the results. Currently, indicators are equally weighted, however it might be that some indicators are more important than others. In doing this, it is very important to be precise about what the index intends to measure, what decisions will be made based on its results, and who the end users might be. Establishing these things early on will help to guide the methodological decisions later.
+
+If we wish to change the relative importance of indicators, we can either:
+
+1. Change indicator weights
+2. Change the structure of the index (e.g. grouping indicators into dimensions)
+3. Add/remove indicators
+
+Overall consider that changing the importance of indicators is not just achieved through playing with weights, and in fact it is probably better if possible to adjust the index structure as this keeps things cleaner.
+
+## Indicator analysis
+
+We run a quick analysis on the indicators to better understand their distributions. Begin by checking the basic statistics of each indicator.
+
+```{r}
+df_stats <- get_stats(DX, dset = "Raw")
+
+df_stats
+```
+
+The summary table shows that all indicators have 100% data availability, but most are strongly skewed. We can examine this further by plotting the distributions.
+
+```{r}
+plot_dist(DX, dset = "Raw", iCodes = "dx_readiness_index", Level = 1,type = "Histogram")
+```
+
+The plots show the strong skew is mostly to do with one or two outliers in each case. E.g.
+
+```{r}
+iplot_scatter(DX, dsets = "Raw", iCodes = c("dev_status", "planned_market_entry"),
+              Levels = 1)
+```
+
+
+Hovering over the outlier we see it is COVID, which has outlying values for most/all indicators.
+
+## The COVID question
+
+The question then arises: what to do about this outlying point? As mentioned before, we need to go back to the objectives of the index to help us decide. We have three basic options with regard to this point:
+
+1. Leave it as it is.
+2. Use outlier treatment (Winsorisation) which will reassign it to have the values of the next highest point in each indicator.
+3. Remove it from the index completely.
+
+If we go with (1), the consequence will be that for most diseases, the scores will be quite low, whereas for COVID this will have the maximum or near-maximum score. In other words, COVID will end up somehow "defining" the index. This may or may not be desirable, again depending on how we want to present the results.
+
+Going with (2), this would effectively convert COVID to look like the disease with the next highest values for each indicator. By inspection from the data, COVID would probably be "transformed" to look like Dengue. This might sound radical but consider that the index should always be presented *along side* the raw data - we use the index as the "headline" but we should always go back to the raw data when making important decisions.
+
+If we go with (3) then out outlier "problem" is solved but we lose the ability to compare our diseases with COVID.
+
+Consider that the results will probably not change greatly, in terms of the rankings of diseases in the index, whether COVID is kept in or out of the index. The point is whether the index should reflect the context of COVID or not.
+
+The final decision should be taken by FIND experts, but what I can do here is to generate several parallel indexes, which can be used to see what the results will be under different approaches, and how much they actually differ. We will therefore check the following alternatives, which also consider variations in the normalisation method, which also can have an effect on outliers.
+
+| **Index** | **COVID** | **Winsorisation** | **Normalisation** | **Comment**                                                 |
+| --------- | --------- | ----------------- | ----------------- | ----------------------------------------------------------- |
+| DX1       | Included  | No                | Min-max           | No form of outlier treatment applied to COVID               |
+| DX2       | Included  | Yes               | Min-max           | COVID will be Winsorised                                    |
+| DX3       | Included  | No                | Percentage ranks  | COVID treated via rank-normalisation                        |
+| DX4       | Included  | No                | Distance to COVID | COVID is used as an ideal case "target" for all diseases    |
+| DX5       | Excluded  | No                | Min-max           | Excluding COVID, we don't need to treat outliers in any way |
+
+
+Here, using a rank normalisation method will flatten the distribution of each indicator, making outlier treatment unnecessary. In DX4 we will also use a normalisation approach which uses COVID as a benchmark, and normalises each indicator as the distance to its value.
+
+We now copy the current coin so that we can make these five alternatives.
+
+```{r}
+DX1 <- DX2 <- DX3 <- DX4 <- DX5 <- DX
+```
+
+## Create alternate indexes
+
+Here we calculate index results for each alternative. In the next section we will display and compare the results.
+
+### DX1
+
+In DX1 we just normalise directly and calculate the index. By default, this normalises using min-max and onto the $[0,100]$ interval. We then simply aggregate as the arithmetic mean of the normalised indicators.
+
+```{r}
+DX1 <- Normalise(DX1, dset = "Raw")
+DX1 <- Aggregate(DX1, dset = "Normalised")
+```
+
+A quick view of the results of this index looks like this:
+
+```{r}
+get_results(DX1, dset = "Aggregated", also_get = "uName") |>
+  knitr::kable()
+```
+
+```{r}
+plot_bar(DX1, dset = "Aggregated", iCode = "dx_readiness_index",
+         uLabel = "uName", flip_coords = TRUE, axes_label = "iName")
+```
+
+
+### DX2
+
+In DX2 we do the same, but additionally apply outlier treatment before normalising and aggregating.
+
+```{r}
+DX2 <- qTreat(DX2, dset = "Raw")
+
+# check what happened
+DX2$Analysis$Treated$Dets_Table |>
+  round_df(2)
+```
+
+This table shows that all indicators except "tpp_available" were not within the "acceptable" skew and kurtosis limits of 2 and 3.5 respectively. As a result, Winorisation was applied to these indicators. After Winsorising 1 point in each indicator (COVID), no further outliers were identified.
+
+Now we normalise and aggregate as in DX1.
+
+```{r}
+DX2 <- Normalise(DX2, dset = "Treated")
+DX2 <- Aggregate(DX2, dset = "Normalised")
+```
+
+A quick view of the results of this index looks like this:
+
+```{r}
+get_results(DX2, dset = "Aggregated", also_get = "uName") |>
+  knitr::kable()
+```
+
+```{r}
+plot_bar(DX2, dset = "Aggregated", iCode = "dx_readiness_index",
+         uLabel = "uName", flip_coords = TRUE, axes_label = "iName")
+```
+
+### DX3
+
+Next we deal with DX3, which has no outlier treatment, but applies percentage-rank normalisation. This automatically treats outliers since each indicator is converted to its ranks, flattening all distributions. This option can be useful if we are not especially interested in the shape of distributions, but more in who is at the top and bottom.
+
+```{r}
+DX3 <- qNormalise(DX3, dset = "Raw", f_n = "n_prank", f_n_para = NULL)
+DX3 <- Aggregate(DX3, dset = "Normalised")
+```
+
+A quick view of the results of this index looks like this:
+
+```{r}
+get_results(DX3, dset = "Aggregated", also_get = "uName") |>
+  knitr::kable()
+```
+
+```{r}
+plot_bar(DX3, dset = "Aggregated", iCode = "dx_readiness_index",
+         uLabel = "uName", flip_coords = TRUE, axes_label = "iName")
+```
+
+### DX4
+
+In DX4 we don't attempt to alter the values of COVID, but instead use it as a benchmark for other diseases. This is done using COINr's distance to a reference function. Due to the way it is set up, we need to pass it the row number in the raw data where COVID is located.
+
+```{r}
+# Find the row index of COVID in the raw data set
+# be careful if the name/code of COVID changes!
+iCOVID <- which(DX4$Data$Raw$uCode == "u_3")
+
+# normalise using distance to COVID
+DX4 <- qNormalise(DX4, dset = "Raw", f_n = "n_dist2ref",
+                  f_n_para = list(iref = iCOVID,  # COVID is set as benchmark
+                                  cap_max = TRUE)) # If value exceeds COVID, capped at 1
+
+# aggregate
+DX4 <- Aggregate(DX4, dset = "Normalised")
+```
+
+The results here will be on the $[0,1]$ scale. A quick view of the results of this index looks like this:
+
+```{r}
+get_results(DX4, dset = "Aggregated", also_get = "uName") |>
+  knitr::kable()
+```
+
+```{r}
+plot_bar(DX4, dset = "Aggregated", iCode = "dx_readiness_index",
+         uLabel = "uName", flip_coords = TRUE, axes_label = "iName")
+```
+
+### DX5
+
+Finally in DX5 we simply exclude COVID completely. There are various ways to do this in COINr, but to keep things simple I'll just remove it from the input data frame and rebuild.
+
+```{r}
+# remove COVID row.
+iData_ <- iData[iData$uCode != "u_3", ]
+
+# rebuild coin
+DX5 <-  new_coin(iData_, iMeta)
+
+# normalise and aggregate
+DX5 <- Normalise(DX5, dset = "Raw")
+DX5 <- Aggregate(DX5, dset = "Normalised")
+```
+
+A quick view of the results of this index looks like this:
+
+```{r}
+get_results(DX5, dset = "Aggregated", also_get = "uName") |>
+  knitr::kable()
+```
+
+```{r}
+plot_bar(DX5, dset = "Aggregated", iCode = "dx_readiness_index",
+         uLabel = "uName", flip_coords = TRUE, axes_label = "iName")
+```
+
+## Comparison
+
+We can make a direct comparison of the results by putting the index ranks side-by-side for each index. Since the normalisation methods produce scores on different scales, we will compare using ranks.
+
+```{r}
+l_DX <- list(DX1 = DX1, DX2 = DX2, DX3 = DX3, DX4 = DX4, DX5 = DX5)
+
+compare_coins_multi(l_DX, dset = "Aggregated", iCode = "dx_readiness_index",
+                    also_get = "uName") |>
+  knitr::kable(row.names = FALSE)
+```
+
+The results show that although there are some differences between the alternative indexes, some messages remain fairly consistent. COVID always has the highest rank, and the diseases with the lowest two ranks (presumably those in most need of attention) are invariably Middle East Respiratory Coronavirus and Salmonella Enterica. There is some variation in the middle-ranking diseases: e.g. Neisseria Meningitidis varies quite a lot based on the methodology - likely this is due to it having somewhat outlying values in one or more indicators, which are changed quite considerably by the outlier-treatment approaches in DX2 and DX3. However we should dig into the underlying data to understand what is going on in each case.
+
+Of course consider what these results do and don't say. They are only based on the indicators given, and presuming the accuracy of that data. The results do not account for e.g. the potential severity of an outbreak of each disease, the transmission mode and so on. It is very important to understand the limitations of a composite indicator in order to make sensible conclusions based on these results.
+
+## What next
+
+This was simply a short study to investigate some alternative methodologies and show the differences in results. We have found that the key results are fairly steady across methodological variations.
+
+However if the index is to be extended to other diseases and possibly other indicators, it is worth carefully examining the results and deciding on a preferred methodology. All of the methodologies here are potentially valid, and the decision should be taken by FIND experts.
+
+One might find some interest in either DX4 or DX5. In the former, we use COVID as a benchmark - this has the advantage that the index scores have a clear meaning, such that they index means "how far the disease is from COVID". This could potentially risk sending the message that we should aim to have COVID numbers for all diseases, but this will depend on the audience of the index. In DX5, we instead exclude COVID completely, perhaps on the basis that it is also conceptually an outlier in terms of diseases.
+
+Overall it is worth aiming for simplicity in an index, because this helps to explain to stakeholders what is going on. This is why although outlier treatment can make sense from a statistical perspective, it can sometimes be better to avoid it if possible, as it can cause confusion with end-users.
+
+A potential alternative methodology not explored here would be to assign targets for each indicator based on expert consensus. This approach is used in other indexes such as the European Skills Index. However this approach hinges on having these targets established for each indicator, and requires a consensus between experts and subsequent buy-in from the index consumers.
