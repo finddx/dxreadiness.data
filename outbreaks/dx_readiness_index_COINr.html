@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.510">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -68,12 +68,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="dx_readiness_index_COINr_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="dx_readiness_index_COINr_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="dx_readiness_index_COINr_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="dx_readiness_index_COINr_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="dx_readiness_index_COINr_files/libs/plotly-binding-4.10.1/plotly.js"></script>
+<link href="dx_readiness_index_COINr_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="dx_readiness_index_COINr_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="dx_readiness_index_COINr_files/libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="dx_readiness_index_COINr_files/libs/typedarray-0.1/typedarray.min.js"></script>
 <script src="dx_readiness_index_COINr_files/libs/jquery-3.5.1/jquery.min.js"></script>
-<link href="dx_readiness_index_COINr_files/libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-<script src="dx_readiness_index_COINr_files/libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="dx_readiness_index_COINr_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="dx_readiness_index_COINr_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="dx_readiness_index_COINr_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="dx_readiness_index_COINr_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
@@ -132,7 +133,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="intro" class="level2">
 <h2 class="anchored" data-anchor-id="intro">Intro</h2>
@@ -199,8 +202,8 @@ Data sets:
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(iCOINr)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">iplot_framework</span>(DX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7c46dd9885c64ca3ff18" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-7c46dd9885c64ca3ff18">{"x":{"visdat":{"27744297750":["function () ","plotlyVisDat"]},"cur_data":"27744297750","attrs":{"27744297750":{"labels":["planned_market_entry","reg_status_approval","dev_status","lab_based","near_poc","true_poc","tpp_available"],"parents":["dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index"],"values":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143],"branchvalues":"total","text":["Planned market entry","Regulatory approval","Under development","Lab-based","Near POC","True POC","TPP available"],"hoverinfo":"text","texttemplate":"%{label}","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sunburst"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["planned_market_entry","reg_status_approval","dev_status","lab_based","near_poc","true_poc","tpp_available"],"parents":["dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index"],"values":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143],"branchvalues":"total","text":["Planned market entry","Regulatory approval","Under development","Lab-based","Near POC","True POC","TPP available"],"hoverinfo":["text","text","text","text","text","text","text"],"texttemplate":["%{label}","%{label}","%{label}","%{label}","%{label}","%{label}","%{label}"],"type":"sunburst","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-ae03de62fdb61b709859" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-ae03de62fdb61b709859">{"x":{"visdat":{"1103372d8ab8f":["function () ","plotlyVisDat"]},"cur_data":"1103372d8ab8f","attrs":{"1103372d8ab8f":{"labels":["planned_market_entry","reg_status_approval","dev_status","lab_based","near_poc","true_poc","tpp_available"],"parents":["dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index"],"values":[0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285],"branchvalues":"total","text":["Planned market entry","Regulatory approval","Under development","Lab-based","Near POC","True POC","TPP available"],"hoverinfo":"text","texttemplate":"%{label}","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sunburst"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["planned_market_entry","reg_status_approval","dev_status","lab_based","near_poc","true_poc","tpp_available"],"parents":["dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index","dx_readiness_index"],"values":[0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.14285714285714285],"branchvalues":"total","text":["Planned market entry","Regulatory approval","Under development","Lab-based","Near POC","True POC","TPP available"],"hoverinfo":["text","text","text","text","text","text","text"],"texttemplate":["%{label}","%{label}","%{label}","%{label}","%{label}","%{label}","%{label}"],"type":"sunburst","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>A first suggestion here is to think carefully about the relative importance of indicators, as this has an impact on the results. Currently, indicators are equally weighted, however it might be that some indicators are more important than others. In doing this, it is very important to be precise about what the index intends to measure, what decisions will be made based on its results, and who the end users might be. Establishing these things early on will help to guide the methodological decisions later.</p>
@@ -250,7 +253,11 @@ Data sets:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_dist</span>(DX, <span class="at">dset =</span> <span class="st">"Raw"</span>, <span class="at">iCodes =</span> <span class="st">"dx_readiness_index"</span>, <span class="at">Level =</span> <span class="dv">1</span>,<span class="at">type =</span> <span class="st">"Histogram"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The plots show the strong skew is mostly to do with one or two outliers in each case. E.g.</p>
@@ -258,8 +265,8 @@ Data sets:
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">iplot_scatter</span>(DX, <span class="at">dsets =</span> <span class="st">"Raw"</span>, <span class="at">iCodes =</span> <span class="fu">c</span>(<span class="st">"dev_status"</span>, <span class="st">"planned_market_entry"</span>),</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Levels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b0d10267680d19a5efd4" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-b0d10267680d19a5efd4">{"x":{"visdat":{"277437e51ba3":["function () ","plotlyVisDat"]},"cur_data":"277437e51ba3","attrs":{"277437e51ba3":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"277437e51ba3.1":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":{},"y":{},"text":["<b>Chikungunya Virus<\/b><br>dev_status: 0<br>planned_market_entry: 61","<b>Marburg Virus<\/b><br>dev_status: 1<br>planned_market_entry: 29","<b>Measles Morbillivirus<\/b><br>dev_status: 0<br>planned_market_entry: 113","<b>Neisseria Meningitidis<\/b><br>dev_status: 0<br>planned_market_entry: 41","<b>Middle East Respiratory Coronavirus<\/b><br>dev_status: 0<br>planned_market_entry: 3","<b>Mpox Virus<\/b><br>dev_status: 9<br>planned_market_entry: 44","<b>Salmonella Paratyphi<\/b><br>dev_status: 0<br>planned_market_entry: 40","<b>Rubella Virus<\/b><br>dev_status: 0<br>planned_market_entry: 199","<b>Salmonella Enterica<\/b><br>dev_status: 0<br>planned_market_entry: 9","<b>Salmonella Spp.<\/b><br>dev_status: 0<br>planned_market_entry: 80","<b>Salmonella Typhi<\/b><br>dev_status: 0<br>planned_market_entry: 139","<b>Vibrio Cholerae<\/b><br>dev_status: 0<br>planned_market_entry: 105","<b>Yellow Fever Virus<\/b><br>dev_status: 0<br>planned_market_entry: 74","<b>Zika Virus<\/b><br>dev_status: 1<br>planned_market_entry: 47","<b>Sars-Cov-2<\/b><br>dev_status: 138<br>planned_market_entry: 2616","<b>Crimean Congo Hemorrhagic Fever Virus<\/b><br>dev_status: 1<br>planned_market_entry: 44","<b>Dengue Virus<\/b><br>dev_status: 10<br>planned_market_entry: 454","<b>Ebola Virus<\/b><br>dev_status: 6<br>planned_market_entry: 73","<b>Influenza A<\/b><br>dev_status: 7<br>planned_market_entry: 216","<b>Influenza B<\/b><br>dev_status: 7<br>planned_market_entry: 215","<b>Lassa Virus<\/b><br>dev_status: 1<br>planned_market_entry: 37"],"hoverinfo":"text","marker":{"size":12,"color":"rgba(10,77,104,0.5)"},"showlegend":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"showlegend":false,"xaxis":{"domain":[0,1],"automargin":true,"title":"Under development","type":"linear"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Planned market entry","type":"linear"},"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"mode":"markers","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"mode":"markers","type":"scatter","x":[0,1,0,0,0,9,0,0,0,0,0,0,0,1,138,1,10,6,7,7,1],"y":[61,29,113,41,3,44,40,199,9,80,139,105,74,47,2616,44,454,73,216,215,37],"text":["<b>Chikungunya Virus<\/b><br>dev_status: 0<br>planned_market_entry: 61","<b>Marburg Virus<\/b><br>dev_status: 1<br>planned_market_entry: 29","<b>Measles Morbillivirus<\/b><br>dev_status: 0<br>planned_market_entry: 113","<b>Neisseria Meningitidis<\/b><br>dev_status: 0<br>planned_market_entry: 41","<b>Middle East Respiratory Coronavirus<\/b><br>dev_status: 0<br>planned_market_entry: 3","<b>Mpox Virus<\/b><br>dev_status: 9<br>planned_market_entry: 44","<b>Salmonella Paratyphi<\/b><br>dev_status: 0<br>planned_market_entry: 40","<b>Rubella Virus<\/b><br>dev_status: 0<br>planned_market_entry: 199","<b>Salmonella Enterica<\/b><br>dev_status: 0<br>planned_market_entry: 9","<b>Salmonella Spp.<\/b><br>dev_status: 0<br>planned_market_entry: 80","<b>Salmonella Typhi<\/b><br>dev_status: 0<br>planned_market_entry: 139","<b>Vibrio Cholerae<\/b><br>dev_status: 0<br>planned_market_entry: 105","<b>Yellow Fever Virus<\/b><br>dev_status: 0<br>planned_market_entry: 74","<b>Zika Virus<\/b><br>dev_status: 1<br>planned_market_entry: 47","<b>Sars-Cov-2<\/b><br>dev_status: 138<br>planned_market_entry: 2616","<b>Crimean Congo Hemorrhagic Fever Virus<\/b><br>dev_status: 1<br>planned_market_entry: 44","<b>Dengue Virus<\/b><br>dev_status: 10<br>planned_market_entry: 454","<b>Ebola Virus<\/b><br>dev_status: 6<br>planned_market_entry: 73","<b>Influenza A<\/b><br>dev_status: 7<br>planned_market_entry: 216","<b>Influenza B<\/b><br>dev_status: 7<br>planned_market_entry: 215","<b>Lassa Virus<\/b><br>dev_status: 1<br>planned_market_entry: 37"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(10,77,104,0.5)","size":12,"line":{"color":"rgba(255,127,14,1)"}},"showlegend":false,"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-c33aa6d9efd3bc36b189" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c33aa6d9efd3bc36b189">{"x":{"visdat":{"11033665e787f":["function () ","plotlyVisDat"]},"cur_data":"11033665e787f","attrs":{"11033665e787f":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"11033665e787f.1":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":{},"y":{},"text":["<b>Chikungunya Virus<\/b><br>dev_status: 0<br>planned_market_entry: 61","<b>Marburg Virus<\/b><br>dev_status: 1<br>planned_market_entry: 29","<b>Measles Morbillivirus<\/b><br>dev_status: 0<br>planned_market_entry: 113","<b>Neisseria Meningitidis<\/b><br>dev_status: 0<br>planned_market_entry: 41","<b>Middle East Respiratory Coronavirus<\/b><br>dev_status: 0<br>planned_market_entry: 3","<b>Mpox Virus<\/b><br>dev_status: 9<br>planned_market_entry: 44","<b>Salmonella Paratyphi<\/b><br>dev_status: 0<br>planned_market_entry: 40","<b>Rubella Virus<\/b><br>dev_status: 0<br>planned_market_entry: 199","<b>Salmonella Enterica<\/b><br>dev_status: 0<br>planned_market_entry: 9","<b>Salmonella Spp.<\/b><br>dev_status: 0<br>planned_market_entry: 80","<b>Salmonella Typhi<\/b><br>dev_status: 0<br>planned_market_entry: 139","<b>Vibrio Cholerae<\/b><br>dev_status: 0<br>planned_market_entry: 105","<b>Yellow Fever Virus<\/b><br>dev_status: 0<br>planned_market_entry: 74","<b>Zika Virus<\/b><br>dev_status: 1<br>planned_market_entry: 47","<b>Sars-Cov-2<\/b><br>dev_status: 138<br>planned_market_entry: 2616","<b>Crimean Congo Hemorrhagic Fever Virus<\/b><br>dev_status: 1<br>planned_market_entry: 44","<b>Dengue Virus<\/b><br>dev_status: 10<br>planned_market_entry: 454","<b>Ebola Virus<\/b><br>dev_status: 6<br>planned_market_entry: 73","<b>Influenza A<\/b><br>dev_status: 7<br>planned_market_entry: 216","<b>Influenza B<\/b><br>dev_status: 7<br>planned_market_entry: 215","<b>Lassa Virus<\/b><br>dev_status: 1<br>planned_market_entry: 37"],"hoverinfo":"text","marker":{"size":12,"color":"rgba(10,77,104,0.5)"},"showlegend":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"showlegend":false,"xaxis":{"domain":[0,1],"automargin":true,"title":"Under development","type":"linear"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Planned market entry","type":"linear"},"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"mode":"markers","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"mode":"markers","type":"scatter","x":[0,1,0,0,0,9,0,0,0,0,0,0,0,1,138,1,10,6,7,7,1],"y":[61,29,113,41,3,44,40,199,9,80,139,105,74,47,2616,44,454,73,216,215,37],"text":["<b>Chikungunya Virus<\/b><br>dev_status: 0<br>planned_market_entry: 61","<b>Marburg Virus<\/b><br>dev_status: 1<br>planned_market_entry: 29","<b>Measles Morbillivirus<\/b><br>dev_status: 0<br>planned_market_entry: 113","<b>Neisseria Meningitidis<\/b><br>dev_status: 0<br>planned_market_entry: 41","<b>Middle East Respiratory Coronavirus<\/b><br>dev_status: 0<br>planned_market_entry: 3","<b>Mpox Virus<\/b><br>dev_status: 9<br>planned_market_entry: 44","<b>Salmonella Paratyphi<\/b><br>dev_status: 0<br>planned_market_entry: 40","<b>Rubella Virus<\/b><br>dev_status: 0<br>planned_market_entry: 199","<b>Salmonella Enterica<\/b><br>dev_status: 0<br>planned_market_entry: 9","<b>Salmonella Spp.<\/b><br>dev_status: 0<br>planned_market_entry: 80","<b>Salmonella Typhi<\/b><br>dev_status: 0<br>planned_market_entry: 139","<b>Vibrio Cholerae<\/b><br>dev_status: 0<br>planned_market_entry: 105","<b>Yellow Fever Virus<\/b><br>dev_status: 0<br>planned_market_entry: 74","<b>Zika Virus<\/b><br>dev_status: 1<br>planned_market_entry: 47","<b>Sars-Cov-2<\/b><br>dev_status: 138<br>planned_market_entry: 2616","<b>Crimean Congo Hemorrhagic Fever Virus<\/b><br>dev_status: 1<br>planned_market_entry: 44","<b>Dengue Virus<\/b><br>dev_status: 10<br>planned_market_entry: 454","<b>Ebola Virus<\/b><br>dev_status: 6<br>planned_market_entry: 73","<b>Influenza A<\/b><br>dev_status: 7<br>planned_market_entry: 216","<b>Influenza B<\/b><br>dev_status: 7<br>planned_market_entry: 215","<b>Lassa Virus<\/b><br>dev_status: 1<br>planned_market_entry: 37"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(10,77,104,0.5)","size":12,"line":{"color":"rgba(255,127,14,1)"}},"showlegend":false,"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Hovering over the outlier we see it is COVID, which has outlying values for most/all indicators.</p>
@@ -509,7 +516,11 @@ Data sets:
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX1, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -718,7 +729,11 @@ Data sets:
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX2, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -859,16 +874,16 @@ Data sets:
 <td style="text-align: right;">17</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">u_10</td>
-<td style="text-align: left;">Marburg Virus</td>
-<td style="text-align: right;">0.21</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">u_9</td>
 <td style="text-align: left;">Lassa Virus</td>
 <td style="text-align: right;">0.21</td>
 <td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u_10</td>
+<td style="text-align: left;">Marburg Virus</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">19</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">u_13</td>
@@ -890,7 +905,11 @@ Data sets:
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX3, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1070,7 +1089,11 @@ Data sets:
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX4, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1251,7 +1274,11 @@ Data sets:
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(DX5, <span class="at">dset =</span> <span class="st">"Aggregated"</span>, <span class="at">iCode =</span> <span class="st">"dx_readiness_index"</span>,</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">uLabel =</span> <span class="st">"uName"</span>, <span class="at">flip_coords =</span> <span class="cn">TRUE</span>, <span class="at">axes_label =</span> <span class="st">"iName"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="dx_readiness_index_COINr_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1446,7 +1473,7 @@ Data sets:
 <td style="text-align: left;">Marburg Virus</td>
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">18</td>
-<td style="text-align: right;">18</td>
+<td style="text-align: right;">19</td>
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">17</td>
 </tr>
@@ -1565,10 +1592,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1578,8 +1604,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1592,6 +1627,135 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1635,6 +1799,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1660,6 +1825,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1720,6 +1911,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

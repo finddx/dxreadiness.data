@@ -51,9 +51,9 @@ A first suggestion here is to think carefully about the relative importance of i
 
 If we wish to change the relative importance of indicators, we can either:
 
-1. Change indicator weights
-2. Change the structure of the index (e.g. grouping indicators into dimensions)
-3. Add/remove indicators
+1.  Change indicator weights
+2.  Change the structure of the index (e.g. grouping indicators into dimensions)
+3.  Add/remove indicators
 
 Overall consider that changing the importance of indicators is not just achieved through playing with weights, and in fact it is probably better if possible to adjust the index structure as this keeps things cleaner.
 
@@ -80,16 +80,15 @@ iplot_scatter(DX, dsets = "Raw", iCodes = c("dev_status", "planned_market_entry"
               Levels = 1)
 ```
 
-
 Hovering over the outlier we see it is COVID, which has outlying values for most/all indicators.
 
 ## The COVID question
 
 The question then arises: what to do about this outlying point? As mentioned before, we need to go back to the objectives of the index to help us decide. We have three basic options with regard to this point:
 
-1. Leave it as it is.
-2. Use outlier treatment (Winsorisation) which will reassign it to have the values of the next highest point in each indicator.
-3. Remove it from the index completely.
+1.  Leave it as it is.
+2.  Use outlier treatment (Winsorisation) which will reassign it to have the values of the next highest point in each indicator.
+3.  Remove it from the index completely.
 
 If we go with (1), the consequence will be that for most diseases, the scores will be quite low, whereas for COVID this will have the maximum or near-maximum score. In other words, COVID will end up somehow "defining" the index. This may or may not be desirable, again depending on how we want to present the results.
 
@@ -102,13 +101,12 @@ Consider that the results will probably not change greatly, in terms of the rank
 The final decision should be taken by FIND experts, but what I can do here is to generate several parallel indexes, which can be used to see what the results will be under different approaches, and how much they actually differ. We will therefore check the following alternatives, which also consider variations in the normalisation method, which also can have an effect on outliers.
 
 | **Index** | **COVID** | **Winsorisation** | **Normalisation** | **Comment**                                                 |
-| --------- | --------- | ----------------- | ----------------- | ----------------------------------------------------------- |
+|-----------|-----------|-------------------|-------------------|-------------------------------------------------------------|
 | DX1       | Included  | No                | Min-max           | No form of outlier treatment applied to COVID               |
 | DX2       | Included  | Yes               | Min-max           | COVID will be Winsorised                                    |
 | DX3       | Included  | No                | Percentage ranks  | COVID treated via rank-normalisation                        |
 | DX4       | Included  | No                | Distance to COVID | COVID is used as an ideal case "target" for all diseases    |
 | DX5       | Excluded  | No                | Min-max           | Excluding COVID, we don't need to treat outliers in any way |
-
 
 Here, using a rank normalisation method will flatten the distribution of each indicator, making outlier treatment unnecessary. In DX4 we will also use a normalisation approach which uses COVID as a benchmark, and normalises each indicator as the distance to its value.
 
@@ -142,7 +140,6 @@ get_results(DX1, dset = "Aggregated", also_get = "uName") |>
 plot_bar(DX1, dset = "Aggregated", iCode = "dx_readiness_index",
          uLabel = "uName", flip_coords = TRUE, axes_label = "iName")
 ```
-
 
 ### DX2
 
