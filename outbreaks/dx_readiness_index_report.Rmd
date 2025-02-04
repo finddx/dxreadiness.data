@@ -26,6 +26,7 @@ library(htmltools)
 library(purrr)
 library(shinyfind)
 library(finddxtemplate)
+library(DT)
 
 htmltools::img(src = system.file('logo', 'logo.svg', package = 'finddxtemplate'), 
                alt = 'logo', 
@@ -145,6 +146,19 @@ disease_pathogen_list |>
         borderColor = "#555"
       )
     ))
+
+
+
+disease_pathogen_list |>
+  arrange(last_update) |>
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip',
+                           buttons = c('copy', 'csv', 'excel'),
+                           lengthMenu = list(c(10,25,50,-1),
+                                             c(10,25,50,"All"))))
+
+
+
 ```
 
 Below you see a summary table for the indicators we have included and how we generated the score for each of them.
@@ -174,6 +188,16 @@ comp_data_method |>
         borderColor = "#555"
       )
     ))
+
+
+
+comp_data_method |>
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip',
+                           buttons = c('copy', 'csv', 'excel'),
+                           lengthMenu = list(c(10,25,50,-1),
+                                             c(10,25,50,"All"))))
+
 
 ```
 
