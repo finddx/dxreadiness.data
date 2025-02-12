@@ -169,7 +169,7 @@ comp_data_iMeta <- data.frame(Level, iCode, iName, Direction, Weight, Parent, Ty
 
 
 comp_data_list <- list(iData = comp_data_idata, iMeta = comp_data_iMeta) |>
-  writexl::write_xlsx(path = "data/dx_readiness_comp_data_20240212.xlsx")
+  writexl::write_xlsx(path = "data/dx_readiness_comp_data_20250212.xlsx")
 
 
 
@@ -178,7 +178,7 @@ comp_data_idata_wo_COVID <- comp_data_idata |>
 
 
 comp_data_list_wo_COVID <- list(iData = comp_data_idata_wo_COVID, iMeta = comp_data_iMeta) |>
-  writexl::write_xlsx(path = "data/dx_readiness_comp_data_wo_COVID_20240212.xlsx")
+  writexl::write_xlsx(path = "data/dx_readiness_comp_data_wo_COVID_20250212.xlsx")
 
 
 

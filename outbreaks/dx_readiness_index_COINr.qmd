@@ -1,7 +1,7 @@
 ---
-title: "DX Readiness Index"
+title: "Pathogen Diagnostics Readiness Index (PDxRI)"
 subtitle: "COINr calculations and alternative methodology"
-author: "Will Becker"
+author: "Anna Mantsoki"
 format: html
 toc: true
 ---
@@ -19,8 +19,8 @@ In this document I will build the index directly in R using the COINr package, r
 The data is found in the data folder. We read in both the indicator data, and the metadata, where the latter also contains the structure of the index. Together, these two tables comprise the inputs necessary to begin working with COINr.
 
 ```{r}
-iData <- readxl::read_excel("./data/dx_readiness_comp_data_20240514.xlsx", sheet = "iData")
-iMeta <- readxl::read_excel("./data/dx_readiness_comp_data_20240514.xlsx", sheet = "iMeta")
+iData <- readxl::read_excel("./data/dx_readiness_comp_data_20250212.xlsx", sheet = "iData")
+iMeta <- readxl::read_excel("./data/dx_readiness_comp_data_20250212.xlsx", sheet = "iMeta")
 
 library(COINr)
 
@@ -101,7 +101,7 @@ Consider that the results will probably not change greatly, in terms of the rank
 The final decision should be taken by FIND experts, but what I can do here is to generate several parallel indexes, which can be used to see what the results will be under different approaches, and how much they actually differ. We will therefore check the following alternatives, which also consider variations in the normalisation method, which also can have an effect on outliers.
 
 | **Index** | **COVID** | **Winsorisation** | **Normalisation** | **Comment**                                                 |
-|-----------|-----------|-------------------|-------------------|-------------------------------------------------------------|
+|-----------|-----------|-----------|-----------|----------------------------|
 | DX1       | Included  | No                | Min-max           | No form of outlier treatment applied to COVID               |
 | DX2       | Included  | Yes               | Min-max           | COVID will be Winsorised                                    |
 | DX3       | Included  | No                | Percentage ranks  | COVID treated via rank-normalisation                        |
