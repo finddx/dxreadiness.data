@@ -8,63 +8,73 @@ library(stringr)
 
 
 tpp_data <- read_excel("data/TPP_outbreak_diseases.xlsx", sheet = "Sheet1") |>
-  select(disease_target = Value, tpp_available = TPP_Available)
+  mutate(disease_target = str_to_title(Value),
+         tpp_available = str_to_title(TPP_Available)) |>
+  select(disease_target, tpp_available)
 
-disease_pathogen_data <- read_csv("data/disease_pathogen_matches.csv") |>
+disease_pathogen_data <- read_csv("data/PDxRI_dates_20250204.csv") |>
   mutate(disease_target = str_to_title(disease_target),
-         target_pathogen = str_to_title(target_pathogen))
+         target_pathogen = str_to_title(`Pathogen list`),
+         last_update = str_to_title(last_update)) |>
+  select(target_pathogen, disease_target, last_update, transmission_mode)
 
 
-disease_list <- data.frame(disease_target = str_to_title(c(
-  "Chikungunya",
-  "Cholera",
-  "Covid-19",
-  "Crimean Congo Hemorrhagic Fever",
-  "Dengue Fever",
-  "Ebola Fever",
-  "Influenza",
-  "Lassa Fever",
-  "Marburg",
-  "Measles",
-  "Meningitis",
-  "Middle East Respiratory Syndrome",
-  "Mpox",
-  "Paratyphoid Fever",
-  "Rubella",
-  "Salmonellosis (Non-Typhoidal)",
-  "Typhoid Fever",
-  "Yellow Fever",
-  "Zika Fever"
-)),
-transmission_mode = c(
-  "Vector-borne",
-  "Waterborne",
-  "Respiratory",
-  "Contact; Zoonotic",
-  "Vector-borne",
-  "Contact; Zoonotic",
-  "Respiratory",
-  "Contact; Zoonotic",
-  "Contact; Zoonotic",
-  "Respiratory",
-  "Airborne droplets, Contact",
-  "Contact; Zoonotic",
-  "Contact; Zoonotic",
-  "Food/waterborne",
-  "Respiratory",
-  "Food/waterborne",
-  "Food/waterborne",
-  "Vector-borne",
-  "Vector-borne; Vertical"
-),
-last_update = c(
-  "2018", "2023", "2021", "2021", "2021", "2022","Unknown",
-  "2023","2023", "2023", "2023", "Unknown", "2022",
-  "2023", "2023", "2023", "2023", "2023", "2019"
-))
+
+# disease_pathogen_data <- read_csv("data/disease_pathogen_matches.csv") |>
+#   mutate(disease_target = str_to_title(disease_target),
+#          target_pathogen = str_to_title(target_pathogen))
 
 
-sf_data <- read_csv("data/report1713812286805_20240422.csv") |>
+# disease_list <- data.frame(disease_target = str_to_title(c(
+#   "Chikungunya",
+#   "Cholera",
+#   "Covid-19",
+#   "Crimean Congo Hemorrhagic Fever",
+#   "Dengue Fever",
+#   "Ebola Fever",
+#   "Influenza",
+#   "Lassa Fever",
+#   "Marburg",
+#   "Measles",
+#   "Meningitis",
+#   "Middle East Respiratory Syndrome",
+#   "Mpox",
+#   "Paratyphoid Fever",
+#   "Rubella",
+#   "Salmonellosis (Non-Typhoidal)",
+#   "Typhoid Fever",
+#   "Yellow Fever",
+#   "Zika Fever"
+# )),
+# transmission_mode = c(
+#   "Vector-borne",
+#   "Waterborne",
+#   "Respiratory",
+#   "Contact; Zoonotic",
+#   "Vector-borne",
+#   "Contact; Zoonotic",
+#   "Respiratory",
+#   "Contact; Zoonotic",
+#   "Contact; Zoonotic",
+#   "Respiratory",
+#   "Airborne droplets, Contact",
+#   "Contact; Zoonotic",
+#   "Contact; Zoonotic",
+#   "Food/waterborne",
+#   "Respiratory",
+#   "Food/waterborne",
+#   "Food/waterborne",
+#   "Vector-borne",
+#   "Vector-borne; Vertical"
+# ),
+# last_update = c(
+#   "2018", "2023", "2021", "2021", "2021", "2022","Unknown",
+#   "2023","2023", "2023", "2023", "Unknown", "2022",
+#   "2023", "2023", "2023", "2023", "2023", "2019"
+# ))
+
+
+sf_data <- read_csv("data/salesforce/report1739355191741_20240212.csv") |>
   select(
     assay_id = `Assay: Assay ID`,
     country = `Assay: Company/Institution Name: Country`,
@@ -82,8 +92,8 @@ sf_data <- read_csv("data/report1713812286805_20240422.csv") |>
   mutate(disease_target = str_to_title(disease_target),
          target_pathogen = str_to_title(target_pathogen)) |>
   left_join(tpp_data) |>
-  inner_join(disease_pathogen_data) |>
-  inner_join(disease_list)
+  inner_join(disease_pathogen_data)
+ # inner_join(disease_list)
 
 
 
@@ -159,7 +169,7 @@ comp_data_iMeta <- data.frame(Level, iCode, iName, Direction, Weight, Parent, Ty
 
 
 comp_data_list <- list(iData = comp_data_idata, iMeta = comp_data_iMeta) |>
-  writexl::write_xlsx(path = "data/dx_readiness_comp_data_20240514.xlsx")
+  writexl::write_xlsx(path = "data/dx_readiness_comp_data_20240212.xlsx")
 
 
 
@@ -168,7 +178,7 @@ comp_data_idata_wo_COVID <- comp_data_idata |>
 
 
 comp_data_list_wo_COVID <- list(iData = comp_data_idata_wo_COVID, iMeta = comp_data_iMeta) |>
-  writexl::write_xlsx(path = "data/dx_readiness_comp_data_wo_COVID_20240422.xlsx")
+  writexl::write_xlsx(path = "data/dx_readiness_comp_data_wo_COVID_20240212.xlsx")
 
 
 

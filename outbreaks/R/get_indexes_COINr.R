@@ -4,8 +4,8 @@ library(openxlsx)
 library(purrr)
 
 
-iData <- readxl::read_excel("./data/dx_readiness_comp_data_20240514.xlsx", sheet = "iData")
-iMeta <- readxl::read_excel("./data/dx_readiness_comp_data_20240514.xlsx", sheet = "iMeta")
+iData <- readxl::read_excel("./data/dx_readiness_comp_data_20240212.xlsx", sheet = "iData")
+iMeta <- readxl::read_excel("./data/dx_readiness_comp_data_20240212.xlsx", sheet = "iMeta")
 
 
 
@@ -44,8 +44,10 @@ dx2 <- list(Raw = dx2$Raw, Treated = dx2$Treated, Normalised = dx2$Normalised,
 Aggregated = dx2$Aggregated, Ind = dx2$Ind, Lineage = dx2$Lineage,
 Unit = dx2$Unit)
 
-writexl::write_xlsx(dx2, path = "results/dxri_20240603.xlsx")
+writexl::write_xlsx(dx2, path = "results/dxri_20240212.xlsx")
 
+dx2_complete <- dx2$Aggregated |>
+  left_join(dx2$Unit)
 
 
 # Get index removing COVID-19 and min-max normalisation - !!!! there is no treatment !!!! --------
@@ -73,5 +75,8 @@ dx5 <- list(Raw = dx5$Raw, Normalised = dx5$Normalised,
             Aggregated = dx5$Aggregated, Ind = dx5$Ind, Lineage = dx5$Lineage,
             Unit = dx5$Unit)
 
-writexl::write_xlsx(dx5, path = "results/dxri_wo_COVID_20240603.xlsx")
+dx5_complete <- dx5$Aggregated |>
+  left_join(dx5$Unit)
+
+writexl::write_xlsx(dx5, path = "results/dxri_wo_COVID_20240212.xlsx")
 
