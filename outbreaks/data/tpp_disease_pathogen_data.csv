@@ -1,0 +1,21 @@
+disease_target,tpp_available,target_pathogen,last_update,transmission_mode
+Chikungunya,No,Chikungunya Virus,Data Only From Multiplex Tests,Vector-borne
+Cholera,Yes,Vibrio Cholerae,2024,Waterborne
+Covid-19,Yes,Sars-Cov-2,2021,Respiratory
+Crimean Congo Hemorrhagic Fever,No,Crimean Congo Hemorrhagic Fever Virus,2021,Contact; Zoonotic
+Dengue Fever,Yes,Dengue Virus,2021,Vector-borne
+Ebola Fever,Yes,Ebola Virus,2024,Contact; Zoonotic
+Influenza,No,Influenza A,Data Only From Multiplex Tests,Respiratory
+Influenza,No,Influenza B,Data Only From Multiplex Tests,Respiratory
+Lassa Fever,No,Lassa Virus,2024,Contact; Zoonotic
+Marburg,No,Marburg Virus,2024,Contact; Zoonotic
+Measles,Yes,Measles Morbillivirus,2024,Respiratory
+Meningitis,Yes,Neisseria Meningitidis,2024,"Airborne droplets, Contact"
+Middle East Respiratory Syndrome,No,Middle East Respiratory Coronavirus,Data Only From Multiplex Tests,Contact; Zoonotic
+Mpox,Yes,Mpox Virus,2024,Contact; Zoonotic
+Nipah,No,Nipah Virus,2024,Zoonotic
+Paratyphoid Fever,Yes,Salmonella Paratyphi,2023,Food/waterborne
+Rubella,Yes,Rubella Virus,2024,Respiratory
+Typhoid Fever,Yes,Salmonella Typhi,2024,Food/waterborne
+Yellow Fever,Yes,Yellow Fever Virus,2024,Vector-borne
+Zika Fever,Yes,Zika Virus,Data Only From Multiplex Tests,Vector-borne; Vertical

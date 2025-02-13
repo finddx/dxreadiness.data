@@ -101,7 +101,7 @@ Consider that the results will probably not change greatly, in terms of the rank
 The final decision should be taken by FIND experts, but what I can do here is to generate several parallel indexes, which can be used to see what the results will be under different approaches, and how much they actually differ. We will therefore check the following alternatives, which also consider variations in the normalisation method, which also can have an effect on outliers.
 
 | **Index** | **COVID** | **Winsorisation** | **Normalisation** | **Comment**                                                 |
-|-----------|-----------|-----------|-----------|----------------------------|
+|-----------|-----------|-------------------|-------------------|-------------------------------------------------------------|
 | DX1       | Included  | No                | Min-max           | No form of outlier treatment applied to COVID               |
 | DX2       | Included  | Yes               | Min-max           | COVID will be Winsorised                                    |
 | DX3       | Included  | No                | Percentage ranks  | COVID treated via rank-normalisation                        |
